@@ -32,17 +32,31 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
     return Scaffold(
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.white,
         currentIndex: _selectedIndex,
         onTap: _navigateBottomBar,
-        type: BottomNavigationBarType.fixed,
+        //type: BottomNavigationBarType.fixed,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.event), label: 'Calendar'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.call_to_action_rounded), label: 'To Do'),
+            icon: Icon(Icons.event),
+            label: 'Calendar',
+            backgroundColor: Colors.green,
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.meeting_room_outlined), label: 'Meetings'),
+            icon: Icon(Icons.call_to_action_rounded),
+            label: 'To Do',
+            backgroundColor: Colors.pink,
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.book_online), label: 'Appointment'),
+            icon: Icon(Icons.meeting_room_outlined),
+            label: 'Meetings',
+            backgroundColor: Colors.orange,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.book_online),
+            label: 'Appointment',
+            backgroundColor: Colors.red,
+          ),
         ],
       ),
     );
