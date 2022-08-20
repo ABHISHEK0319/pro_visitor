@@ -61,13 +61,13 @@ class MainDrawer extends StatelessWidget {
           const ListTile(
             minVerticalPadding: 15.0,
             leading: Icon(
-              Icons.event,
+              Icons.event, //Icon......
               color: Color.fromARGB(255, 41, 184, 46),
               size: 24.0,
               semanticLabel: 'Calendar Page',
             ),
             title: Text(
-              'Calendar',
+              'Calendar', //Text..........
               style: TextStyle(
                 fontSize: 18,
               ),
@@ -79,13 +79,13 @@ class MainDrawer extends StatelessWidget {
           const ListTile(
             minVerticalPadding: 15.0,
             leading: Icon(
-              Icons.event,
-              color: Color.fromARGB(255, 41, 184, 46),
+              Icons.call_to_action_rounded, //Icon......
+              color: Colors.pinkAccent,
               size: 24.0,
               semanticLabel: 'ToDo Page',
             ),
             title: Text(
-              'To Do',
+              'To Do', //Text..........
               style: TextStyle(
                 fontSize: 18,
               ),
@@ -97,13 +97,13 @@ class MainDrawer extends StatelessWidget {
           const ListTile(
             minVerticalPadding: 15.0,
             leading: Icon(
-              Icons.meeting_room_outlined,
+              Icons.meeting_room_outlined, //Icon......
               color: Colors.orange,
               size: 24.0,
               semanticLabel: 'Meetings Page',
             ),
             title: Text(
-              'Meetings',
+              'Meetings', //Text..........
               style: TextStyle(
                 fontSize: 18,
               ),
@@ -115,13 +115,13 @@ class MainDrawer extends StatelessWidget {
           const ListTile(
             minVerticalPadding: 15.0,
             leading: Icon(
-              Icons.book_online,
+              Icons.book_online, //Icon......
               color: Colors.redAccent,
               size: 24.0,
               semanticLabel: 'Appointment Page',
             ),
             title: Text(
-              'Appointment',
+              'Appointment', //Text..........
               style: TextStyle(
                 fontSize: 18,
               ),
@@ -133,13 +133,13 @@ class MainDrawer extends StatelessWidget {
           const ListTile(
             minVerticalPadding: 15.0,
             leading: Icon(
-              Icons.contacts,
+              Icons.contacts, //Icon......
               color: Colors.blue,
               size: 24.0,
               semanticLabel: 'Contacts Page',
             ),
             title: Text(
-              'Contacts',
+              'Contacts', //Text..........
               style: TextStyle(
                 fontSize: 18,
               ),
@@ -151,19 +151,41 @@ class MainDrawer extends StatelessWidget {
           const ListTile(
             minVerticalPadding: 15.0,
             leading: Icon(
-              Icons.boy,
+              Icons.people, //Icon......
               color: Color.fromARGB(255, 54, 69, 77),
               size: 32.0,
               semanticLabel: 'Employees Page',
             ),
             title: Text(
-              'Employees',
+              'Employees', //Text..........
               style: TextStyle(
                 fontSize: 18,
               ),
             ),
             onTap: null,
           ),
+
+          //For LogOut.....
+          const ListTile(
+            dense: true,
+            contentPadding: EdgeInsets.only(top: 260.0, left: 160.0),
+            leading: Icon(
+              Icons.logout_rounded, //Icon......
+              color: Colors.red,
+              size: 32.0,
+              semanticLabel: 'Person LogOut',
+            ),
+            title: Text(
+              'LogOut', //Text..........
+              style: TextStyle(
+                color: Colors.redAccent,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            onTap: null,
+          ),
+
           //Ends ListTile......
         ],
       ),
