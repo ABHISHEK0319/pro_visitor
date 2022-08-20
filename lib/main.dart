@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pro_visitor/main_drawer.dart';
+import 'package:pro_visitor/bottom_nav_bar.dart';
 
 void main() {
   runApp(
@@ -27,7 +27,7 @@ class Home extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
       ),
-      drawer: const MainDrawer(),
+      bottomNavigationBar: const MyBottomNavBar(),
     );
   }
 }
