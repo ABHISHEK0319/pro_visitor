@@ -75,6 +75,24 @@ class MainDrawer extends StatelessWidget {
             onTap: null,
           ),
 
+          //For To_Do..........
+          const ListTile(
+            minVerticalPadding: 15.0,
+            leading: Icon(
+              Icons.event,
+              color: Color.fromARGB(255, 41, 184, 46),
+              size: 24.0,
+              semanticLabel: 'ToDo Page',
+            ),
+            title: Text(
+              'To Do',
+              style: TextStyle(
+                fontSize: 18,
+              ),
+            ),
+            onTap: null,
+          ),
+
           //For Meeting .........
           const ListTile(
             minVerticalPadding: 15.0,
@@ -146,7 +164,6 @@ class MainDrawer extends StatelessWidget {
             ),
             onTap: null,
           ),
-
           //Ends ListTile......
         ],
       ),
