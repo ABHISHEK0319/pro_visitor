@@ -14,12 +14,14 @@ class MyBottomNavBar extends StatefulWidget {
 class _MyBottomNavBarState extends State<MyBottomNavBar> {
   int _selectedIndex = 0;
 
+// Here I'm define bottom nav indexing through the selectedIndex value or Methods..
   void _navigateBottomBar(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
 
+// Define list of pages/Methods like calendar, todo, etc......... are call here.
   final List<Widget> _pages = [
     const CalendarActivity(),
     const ToDoActivity(),
@@ -27,31 +29,40 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
     const AppointmentActivity(),
   ];
 
+// Here my build method and define all widgets..........
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _pages[_selectedIndex],
+
+      //Define my bottom Navigation code.......
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.white,
         currentIndex: _selectedIndex,
         onTap: _navigateBottomBar,
         //type: BottomNavigationBarType.fixed,
+
+        // and also define bottom navigation items...........
         items: const [
+          //Here calendar item...
           BottomNavigationBarItem(
             icon: Icon(Icons.event),
             label: 'Calendar',
             backgroundColor: Colors.green,
           ),
+          //Here ToDo item.......
           BottomNavigationBarItem(
             icon: Icon(Icons.call_to_action_rounded),
             label: 'To Do',
             backgroundColor: Colors.pink,
           ),
+          //Here Meeting item.....
           BottomNavigationBarItem(
             icon: Icon(Icons.meeting_room_outlined),
             label: 'Meetings',
             backgroundColor: Colors.orange,
           ),
+          //Here Appointment item...
           BottomNavigationBarItem(
             icon: Icon(Icons.book_online),
             label: 'Appointment',

@@ -5,6 +5,7 @@ class AppointmentActivity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: sized_box_for_whitespace
     return const Center(
       child: Text(
         'Appointments',
