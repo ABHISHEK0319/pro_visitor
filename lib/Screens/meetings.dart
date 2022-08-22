@@ -8,7 +8,9 @@ class MeetingActivity extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Welcome to Visitor Log',
-      theme: ThemeData(),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.orange),
+      ),
       home: Scaffold(
         body: Column(
           children: [

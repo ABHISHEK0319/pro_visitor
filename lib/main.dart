@@ -2,13 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pro_visitor/bottom_nav_bar.dart';
 
 void main() {
-  runApp(
-    const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Visitor App',
-      home: MyApp(),
-    ),
-  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +10,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Welcome to Visitor Log',
+      // theme: ThemeData(
+      //   colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.orange),
+      // ),
+      home: Scaffold(
         appBar: AppBar(
           title: const Text('Welcome to Visitor Log'),
           actions: <Widget>[
