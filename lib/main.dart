@@ -16,10 +16,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Welcome to Visitor Log',
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: const Text('Welcome to Visitor Log'),
           actions: <Widget>[
