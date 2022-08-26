@@ -48,25 +48,25 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
           BottomNavigationBarItem(
             icon: Icon(Icons.event),
             label: 'Calendar',
-            backgroundColor: Colors.green,
+            backgroundColor: Color.fromARGB(255, 89, 124, 231),
           ),
           //Here ToDo item.......
           BottomNavigationBarItem(
             icon: Icon(Icons.call_to_action_rounded),
             label: 'To Do',
-            backgroundColor: Colors.pink,
+            backgroundColor: Color.fromRGBO(63, 193, 32, 1),
           ),
           //Here Meeting item.....
           BottomNavigationBarItem(
             icon: Icon(Icons.meeting_room_outlined),
             label: 'Meetings',
-            backgroundColor: Colors.orange,
+            backgroundColor: Color.fromRGBO(255, 152, 0, 1),
           ),
           //Here Appointment item...
           BottomNavigationBarItem(
             icon: Icon(Icons.book_online),
             label: 'Appointment',
-            backgroundColor: Colors.red,
+            backgroundColor: Color.fromRGBO(235, 64, 52, 1),
           ),
         ],
       ),

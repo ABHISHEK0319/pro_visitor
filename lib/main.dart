@@ -13,9 +13,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Welcome to Visitor Log',
-      // theme: ThemeData(
-      //   colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.orange),
-      // ),
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Welcome to Visitor Log'),
