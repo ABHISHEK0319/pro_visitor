@@ -32,6 +32,7 @@ class _AddMeetingDialogState extends State<AddMeetingDialog> {
     var titleMeetController = TextEditingController();
     var timeMeetController = TextEditingController();
     var dateMeetController = TextEditingController();
+
     return SizedBox(
       // padding: const EdgeInsets.all(15),
       height: 340,
@@ -54,7 +55,7 @@ class _AddMeetingDialogState extends State<AddMeetingDialog> {
             ),
             buildTextfield('Title of the Meeting.', titleMeetController),
             buildTextfield("Mention the time", timeMeetController),
-            buildTextfield('Mention the Date', dateMeetController),
+            buildTextfield("Mention the date", dateMeetController),
 
             const SizedBox(
               height: 20,

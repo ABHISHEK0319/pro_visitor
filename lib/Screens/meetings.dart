@@ -78,9 +78,9 @@ class _MeetingListState extends State<MeetingList> {
               key: ValueKey(item),
               // The start action pane is the one at the left or the top side.
               startActionPane: ActionPane(
+                dragDismissible: false,
                 // A motion is a widget used to control how the pane animates.
                 motion: const StretchMotion(),
-
                 // A pane can dismiss the Slidable.
                 dismissible: DismissiblePane(onDismissed: () {
                   setState(() {
@@ -89,16 +89,16 @@ class _MeetingListState extends State<MeetingList> {
                 }),
 
                 // All actions are defined in the children parameter.
-                children: const [
+                children: [
                   // A SlidableAction can have an icon and/or a label.
                   SlidableAction(
-                    onPressed: null,
-                    backgroundColor: Color(0xFFFE4A49),
+                    onPressed: ((context) {}),
+                    backgroundColor: const Color(0xFFFE4A49),
                     foregroundColor: Colors.white,
-                    icon: Icons.delete,
+                    icon: Icons.edit,
                     label: 'Edit',
                   ),
-                  SlidableAction(
+                  const SlidableAction(
                     onPressed: null,
                     backgroundColor: Color(0xFF21B7CA),
                     foregroundColor: Colors.white,
@@ -108,6 +108,25 @@ class _MeetingListState extends State<MeetingList> {
                 ],
               ),
 
+              // The end action pane is the one at the right or the bottom side.
+              endActionPane: ActionPane(
+                motion: const StretchMotion(),
+                children: [
+                  SlidableAction(
+                    //An action can be bigger than the others.
+                    flex: 2,
+                    onPressed: (BuildContext context) {
+                      setState(() {
+                        userList.removeAt(index);
+                      });
+                    },
+                    backgroundColor: Colors.red,
+                    foregroundColor: Colors.white,
+                    icon: Icons.delete,
+                    label: 'Deleted',
+                  ),
+                ],
+              ),
               child: Card(
                 //Here define meeting list random colors.........
                 color:
