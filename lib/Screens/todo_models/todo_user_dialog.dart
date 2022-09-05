@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pro_visitor/Screens/todo_models/todo_user_dialog.dart';
 import 'package:pro_visitor/Screens/todo_models/todo_users.dart';
-import 'package:intl/intl.dart';
 
 class AddTaskDialog extends StatefulWidget {
   
-
   final Function(Task) addTask;
 
   AddTaskDialog(this.addTask);
@@ -14,10 +11,11 @@ class AddTaskDialog extends StatefulWidget {
   State<AddTaskDialog> createState() => _AddTaskDialogState();
 }
 
-
 class _AddTaskDialogState extends State<AddTaskDialog> {
 
-TextEditingController _date = TextEditingController();
+TextEditingController _title = TextEditingController();
+TextEditingController _description = TextEditingController();
+TextEditingController _datetime = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,17 +37,10 @@ TextEditingController _date = TextEditingController();
         ),
       );
     }
-
-    
-    var titleController = TextEditingController();
-    var descriptionController = TextEditingController();
-    //var dateController = TextEditingController();
-    
-    
     return Container(
       padding: EdgeInsets.all(8),
       height: 330,
-      width: 400,
+      width: 500,
       child: Column(
         children: [
           Text(
@@ -60,54 +51,52 @@ TextEditingController _date = TextEditingController();
               color: Color(0xff3fc120),
             ),
             ),
-          
-          
-          //buildTextfield('Date', dateController),
-          Padding(
-                padding: EdgeInsets.all(10.0),
+              Padding(
+                padding: EdgeInsets.only(top: 15.0),
               ),
-          TextField(
-                controller: _date,
+              TextField(
+                autofocus: true,
+                controller: _title,
                 decoration: const InputDecoration(
-                  icon: Icon(Icons.calendar_today_rounded),
+                  icon: Icon(Icons.title_outlined),
                   border: OutlineInputBorder(),
-                  hintText: 'Select Date',
-                  labelText: 'Select Date',
+                  hintText: 'Title',
+                  labelText: 'Title',
                 ),
-                onTap: () async {
-                  DateTime? pickeddate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2022),
-                    lastDate: DateTime(3000));
-                  
-      
-                  if (pickeddate != null){
-                      setState((){
-                        _date.text = 
-                        _date.text = DateFormat('dd-MM-yyyy').format(pickeddate);
-                      }
-                      );
-                    }
-                },
               ),
-               Padding(
-                padding: EdgeInsets.all(2.0),
+              Padding(
+                padding: EdgeInsets.only(top: 15.0),
               ),
-              buildTextfield('Title', titleController),
-              buildTextfield('Description', descriptionController),
-      
+              TextField(
+                controller: _description,
+                decoration: const InputDecoration(
+                  icon: Icon(Icons.description_outlined),
+                  border: OutlineInputBorder(),
+                  hintText: 'Description',
+                  labelText: 'Description',
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 15.0),
+              ),
+              TextField(
+                controller: _datetime,
+                decoration: const InputDecoration(
+                  icon: Icon(Icons.calendar_month_outlined),
+                  border: OutlineInputBorder(),
+                  hintText: 'Date & Time',
+                  labelText: 'Date & Time',
+                ),
+              ),
           Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.only(top: 15.0),
               ),
           RaisedButton(             //RaisedButton on alert diadlog
                   onPressed: (){
-
-                    final task = Task(titleController.text, descriptionController.text,
-                        _date.text);
+                    final task = Task(_title.text, _description.text,
+                        _datetime.text);
                     widget.addTask(task);
                     Navigator.of(context).pop();
-
                   },
                   color: Color(0Xff3fc120),
                   child: Text(
