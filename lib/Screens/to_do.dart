@@ -135,6 +135,7 @@ class _ToDoActivityState extends State<ToDoActivity> {
   // The end action pane is the one at the right or the bottom side.
   endActionPane: const ActionPane(
     motion: ScrollMotion(),
+    extentRatio: 0.25,
     children: [
       SlidableAction(
         // An action can be bigger than the others.
@@ -142,15 +143,8 @@ class _ToDoActivityState extends State<ToDoActivity> {
         onPressed: null,
         backgroundColor: Colors.grey,
         foregroundColor: Colors.white,
-        icon: Icons.archive,
-        label: 'Archive',
-      ),
-      SlidableAction(
-        onPressed: null,
-        backgroundColor: Color(0xFF0392CF),
-        foregroundColor: Colors.white,
-        icon: Icons.save,
-        label: 'Save',
+        icon: Icons.edit_note_outlined,
+        label: 'Edit',
       ),
     ],
   ),
