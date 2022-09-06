@@ -10,6 +10,12 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:pro_visitor/Screens/todo_models/todo_user_dialog.dart';
 import 'package:pro_visitor/Screens/todo_models/todo_users.dart';
 
+void main() {
+  runApp(const ToDopage());
+  //runApp(const contactpage());
+  
+}
+
 class ToDopage extends StatelessWidget {
   const ToDopage({Key? key}) : super(key: key);
 
@@ -103,7 +109,7 @@ class _ToDoActivityState extends State<ToDoActivity> {
     dragDismissible: false,
     // A motion is a widget used to control how the pane animates.
     motion: const ScrollMotion(),
-    extentRatio: 0.50,
+    extentRatio: 0.25,
     
     // A pane can dismiss the Slidable.
     //dismissible: DismissiblePane(onDismissed: () {}),
@@ -121,14 +127,6 @@ class _ToDoActivityState extends State<ToDoActivity> {
         
        // borderRadius: BorderRadius.all(2.0),
       ),
-      SlidableAction(
-        onPressed: null,
-        backgroundColor: Colors.blueAccent,
-        foregroundColor: Colors.white,
-        icon: Icons.share,
-        label: 'Share',
-        
-      ),
     ],
   ),
 
@@ -143,7 +141,7 @@ class _ToDoActivityState extends State<ToDoActivity> {
         onPressed: null,
         backgroundColor: Colors.grey,
         foregroundColor: Colors.white,
-        icon: Icons.edit_note_outlined,
+        icon: Icons.edit,
         label: 'Edit',
       ),
     ],
