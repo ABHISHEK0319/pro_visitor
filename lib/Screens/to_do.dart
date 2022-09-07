@@ -10,14 +10,9 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:pro_visitor/Screens/todo_models/todo_user_dialog.dart';
 import 'package:pro_visitor/Screens/todo_models/todo_users.dart';
 
-void main() {
-  runApp(const ToDopage());
-  //runApp(const contactpage());
-  
-}
 
-class ToDopage extends StatelessWidget {
-  const ToDopage({Key? key}) : super(key: key);
+class ToDo_page extends StatelessWidget {
+  const ToDo_page({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -112,7 +107,6 @@ class _ToDoActivityState extends State<ToDoActivity> {
     extentRatio: 0.25,
     
     // A pane can dismiss the Slidable.
-    //dismissible: DismissiblePane(onDismissed: () {}),
 
     // All actions are defined in the children parameter.
     children: const [
@@ -189,7 +183,7 @@ class _ToDoActivityState extends State<ToDoActivity> {
       
       ),
 
-);
+    );
     
   }
 }
