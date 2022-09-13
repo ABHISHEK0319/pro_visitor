@@ -1,20 +1,10 @@
-
-
-import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'todo_models/todo_list_page.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+class ToDo_Page extends StatelessWidget {
+  const ToDo_Page({Key? key}) : super(key: key);
 
-import 'package:pro_visitor/Screens/todo_models/todo_user_dialog.dart';
-import 'package:pro_visitor/Screens/todo_models/todo_users.dart';
-
-
-class ToDo_page extends StatelessWidget {
-  const ToDo_page({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,167 +13,93 @@ class ToDo_page extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: ToDoActivity(),
+      home: ToDo_List(),
     );
   }
 }
 
-class ToDoActivity extends StatefulWidget {
-  
+class ToDo_List extends StatefulWidget {
+  const ToDo_List({Key? key}) : super(key: key);
 
   @override
-  State<ToDoActivity> createState() => _ToDoActivityState();
-  
+  State<ToDo_List> createState() => _ToDo_ListState();
 }
 
-class _ToDoActivityState extends State<ToDoActivity> {
-
-
-  List<Task> taskList = [];
-
+class _ToDo_ListState extends State<ToDo_List> {
+  int count = 0;
   @override
   Widget build(BuildContext context) {
-    
-   
-
-  void addTaskData(Task task){
-    setState(() {
-      taskList.add(task);
-    });
-  }
-
-    void showTaskDialog(){
-      showDialog(context: context, 
-      builder: (_){
-        return SingleChildScrollView(
-          child: AlertDialog(
-            alignment: Alignment.center,
-              content: AddTaskDialog(addTaskData),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-            ),
-        );
-      },
-    );
-  }
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xff3FC120),
+        title: Text(
+          'Welcome To Visitor Log',
+          style: TextStyle(
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
-        onPressed: showTaskDialog,
+        onPressed: () {
+          debugPrint("FAB clicked");
+          navigateToPage('Add Task');
+          //navigateToDetail(Note(0,'','',''),'Add Note');
+        },
+        tooltip: 'Add Task',
         child: Icon(
           Icons.add,
           color: Colors.white,
         ),
         backgroundColor: Color(0Xff3fc120),
       ),
-      appBar: AppBar(
-        backgroundColor: Color(0xff3fc120),
-        title: Text(
-          'Welcome To Visitor Log',
-          //DateFormat('dd-MM-yyyy  KK:mm:ss a').format(DateTime.now()),
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      
-      body: Container(
-        height: MediaQuery.of(context).size.height * 1.0,
-        child: ListView.builder(
-          itemBuilder: (ctx,index){
-            
-  return Slidable(
-  // Specify a key if the Slidable is dismissible.
-  key: const ValueKey(0),
+      body: todolistview(),
+    );
+  }
+  
+  ListView todolistview(){
+    return ListView.builder(
+      itemCount: count,
+      itemBuilder: (BuildContext context, int position){
 
-  // The start action pane is the one at the left or the top side.
-  startActionPane: ActionPane(
-    dismissible: DismissiblePane(onDismissed: (){}),
-    dragDismissible: false,
-    // A motion is a widget used to control how the pane animates.
-    motion: const ScrollMotion(),
-    extentRatio: 0.25,
-    
-    // A pane can dismiss the Slidable.
 
-    // All actions are defined in the children parameter.
-    children: const [
-      // A SlidableAction can have an icon and/or a label.
-      SlidableAction(
-        flex: 1,
-        onPressed: null,
-        backgroundColor: Colors.red,
-        foregroundColor: Colors.white,
-        icon: Icons.delete,
-        label: 'Delete',
-        
-       // borderRadius: BorderRadius.all(2.0),
-      ),
-    ],
-  ),
-
-  // The end action pane is the one at the right or the bottom side.
-  endActionPane: const ActionPane(
-    motion: ScrollMotion(),
-    extentRatio: 0.25,
-    children: [
-      SlidableAction(
-        // An action can be bigger than the others.
-        flex: 1,
-        onPressed: null,
-        backgroundColor: Colors.grey,
-        foregroundColor: Colors.white,
-        icon: Icons.edit,
-        label: 'Edit',
-      ),
-    ],
-  ),
-
-  // The child of the Slidable is what the user sees when the
-  // component is not dragged.
-
-          child: Card(
-            
-            //color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
-            color: Colors.white,
-            //margin: EdgeInsets.all(4),
-            //elevation: 8,
-            child: ListTile(
-              leading: Icon(Icons.task_outlined,color: Color(0Xff3fc120),),
+        return Card(
+          color: Colors.white,
+          elevation: 2.0,
+          child: ListTile(
+            leading: Icon(Icons.task_outlined,color: Color(0Xff3fc120),),
                       //listTile
-              title: Text(taskList[index].title,
+              title: Text(
+                'dummy title',
                 style: TextStyle(
                   fontSize: 20.0,
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              subtitle: Text(taskList[index].description,
+              subtitle: Text(
+                'Dummy dateTime',
                 style: TextStyle(
                   fontSize: 15.0,
-                  
                 ),
               ),
-              trailing: Text(
-                taskList[index].date,
-                
-                style: TextStyle(
-                  fontSize: 18.0,
-                  
-                ),
+              trailing: Icon(
+                Icons.delete,
+                color: Colors.red,
               ),
-            ),
+              onTap: () {
+                debugPrint("ListTile tapped");
+                navigateToPage('Edit Task');
+                //navigateToDetail(this.noteList[position],'Edit Note');
+              },
           ),
-          );
-        },
-        itemCount: taskList.length,
-      ),
-      
-      ),
-
+        );
+      },
     );
-    
+  }
+  void navigateToPage(String appbar){
+    Navigator.push(context,MaterialPageRoute(builder: (context){
+      return ToDo_List_Page(appbar);
+    }));
   }
 }
