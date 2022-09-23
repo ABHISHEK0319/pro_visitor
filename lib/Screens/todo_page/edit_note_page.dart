@@ -72,7 +72,7 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
         child: Text(
           'Save',
           style: TextStyle(
-            fontSize: 18,
+            fontSize: 22,
             fontWeight: FontWeight.bold,
           ),
           ),
