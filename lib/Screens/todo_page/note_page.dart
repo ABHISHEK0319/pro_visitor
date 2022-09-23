@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-//import 'package:sqflite_database_example/db/notes_database.dart';
 import 'package:pro_visitor/Screens/todo_Database/todo_dbhelper.dart';
-//import 'package:sqflite_database_example/model/note.dart';
 import 'package:pro_visitor/Screens/todo_models/todo_data.dart';
-//import 'package:sqflite_database_example/page/edit_note_page.dart';
 import 'package:pro_visitor/Screens/todo_page/edit_note_page.dart';
-//import 'package:sqflite_database_example/widget/note_card_widget.dart';
 import 'package:pro_visitor/Screens/todo_widget/note_card_widget.dart';
 import 'package:pro_visitor/Screens/todo_page/note_detail_page.dart';
 

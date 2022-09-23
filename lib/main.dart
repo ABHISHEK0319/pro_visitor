@@ -1,18 +1,6 @@
 
-/*
-import 'package:flutter/material.dart';
-import 'Screens/to_do.dart';
-import 'Screens/appointments.dart';
-import 'Screens/todo_models/todo_list_page.dart';
-
-void main() {
-  //runApp(const ToDo_Page());
-  runApp(const Appo_Page());
-}
-*/
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-//import 'package:sqflite_database_example/page/notes_page.dart';
 import 'package:pro_visitor/Screens/todo_page/note_page.dart';
 
 Future main() async {

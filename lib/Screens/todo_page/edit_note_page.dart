@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-//import 'package:sqflite_database_example/db/notes_database.dart';
 import 'package:pro_visitor/Screens/todo_Database/todo_dbhelper.dart';
-//import 'package:sqflite_database_example/model/note.dart';
 import 'package:pro_visitor/Screens/todo_models/todo_data.dart';
-//import 'package:sqflite_database_example/widget/note_form_widget.dart';
 import 'package:pro_visitor/Screens/todo_widget/note_form_widget.dart';
 
 class AddEditNotePage extends StatefulWidget {
@@ -65,6 +62,8 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
       padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          elevation: 10.0,
+          shadowColor: Colors.red,
           onPrimary: Colors.white,
           primary: isFormValid ? null : Colors.grey,
         ),

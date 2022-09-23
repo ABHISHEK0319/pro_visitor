@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-//import 'package:sqflite_database_example/db/notes_database.dart';
 import 'package:pro_visitor/Screens/todo_Database/todo_dbhelper.dart';
-//import 'package:sqflite_database_example/model/note.dart';
 import 'package:pro_visitor/Screens/todo_models/todo_data.dart';
-//import 'package:sqflite_database_example/page/edit_note_page.dart';
 import 'package:pro_visitor/Screens/todo_page/edit_note_page.dart';
 
 class NoteDetailPage extends StatefulWidget {
