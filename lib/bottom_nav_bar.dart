@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pro_visitor/Screens/Todo%20folder/todo_page/note_page.dart';
 import 'package:pro_visitor/Screens/appointments.dart';
 import 'package:pro_visitor/Screens/Calendra/calendar.dart';
 import 'package:pro_visitor/Screens/meetings.dart';
-import 'package:pro_visitor/Screens/to_do.dart';
 
 class MyBottomNavBar extends StatefulWidget {
   const MyBottomNavBar({Key? key}) : super(key: key);
@@ -24,7 +24,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
 // Define list of pages/Methods like calendar, todo, etc......... are call here.
   final List<Widget> _pages = [
     const CalendarActivity(),
-    const ToDoActivity(),
+    const NotesPage(),
     const MeetingActivity(),
     const AppointmentActivity(),
   ];
@@ -33,6 +33,28 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Welcome to Visitor Log'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.more_vert, color: Colors.white),
+            tooltip: 'Settings',
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('This is a snackbar'),
+                  duration: Duration(milliseconds: 1500),
+                  width: 280.0, // Width of the SnackBar.
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 8.0, // Inner padding for SnackBar content.
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+
       body: _pages[_selectedIndex],
 
       //Define my bottom Navigation code.......

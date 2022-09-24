@@ -1,16 +1,20 @@
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:pro_visitor/Screens/my_profile.dart';
 import 'package:pro_visitor/bottom_nav_bar.dart';
 import 'package:pro_visitor/pages/login_otp.dart';
 import 'package:pro_visitor/pages/login_phone.dart';
 import 'package:pro_visitor/pages/registration.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 import 'Screens/Calendra/event_provider.dart';
 // import 'config/config.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
 
   //await Firebase.initializeApp();
 
@@ -43,29 +47,29 @@ class MyApp extends StatelessWidget {
           'MyBottomNav': (context) => const MyBottomNavBar(),
         },
         title: 'Welcome to Visitor Log',
-        home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Welcome to Visitor Log'),
-            actions: <Widget>[
-              IconButton(
-                icon: const Icon(Icons.more_vert, color: Colors.white),
-                tooltip: 'Settings',
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('This is a snackbar'),
-                      duration: Duration(milliseconds: 1500),
-                      width: 280.0, // Width of the SnackBar.
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 8.0, // Inner padding for SnackBar content.
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-          body: const MyBottomNavBar(),
+        home: const Scaffold(
+          // appBar: AppBar(
+          //   title: const Text('Welcome to Visitor Log'),
+          //   actions: <Widget>[
+          //     IconButton(
+          //       icon: const Icon(Icons.more_vert, color: Colors.white),
+          //       tooltip: 'Settings',
+          //       onPressed: () {
+          //         ScaffoldMessenger.of(context).showSnackBar(
+          //           const SnackBar(
+          //             content: Text('This is a snackbar'),
+          //             duration: Duration(milliseconds: 1500),
+          //             width: 280.0, // Width of the SnackBar.
+          //             padding: EdgeInsets.symmetric(
+          //               horizontal: 8.0, // Inner padding for SnackBar content.
+          //             ),
+          //           ),
+          //         );
+          //       },
+          //     ),
+          //   ],
+          // ),
+          body: MyBottomNavBar(),
         ),
       ),
     );
