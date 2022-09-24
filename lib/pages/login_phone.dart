@@ -1,11 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class MyPhone extends StatefulWidget {
   const MyPhone({Key? key}) : super(key: key);
 
-  static String verify = "";
+  // static String verify = "";
 
   @override
   State<MyPhone> createState() => _MyPhoneState();
@@ -24,6 +22,7 @@ class _MyPhoneState extends State<MyPhone> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
         margin: const EdgeInsets.only(left: 25, right: 25),
         child: Center(
@@ -101,19 +100,20 @@ class _MyPhoneState extends State<MyPhone> {
                   height: 45,
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () async {
-                      await FirebaseAuth.instance.verifyPhoneNumber(
-                        phoneNumber: '${countrycode.text + phone}',
-                        verificationCompleted:
-                            (PhoneAuthCredential credential) {},
-                        verificationFailed: (FirebaseAuthException e) {},
-                        codeSent: (String verificationId, int? resendToken) {
-                          MyPhone.verify = verificationId;
-                          Navigator.pushNamed(context, 'otp');
-                        },
-                        codeAutoRetrievalTimeout: (String verificationId) {},
-                      );
-                      // Navigator.pushNamed(context, 'otp');
+                    onPressed: () {
+                      //  async {
+                      //   await FirebaseAuth.instance.verifyPhoneNumber(
+                      //     phoneNumber: '${countrycode.text + phone}',
+                      //     verificationCompleted:
+                      //         (PhoneAuthCredential credential) {},
+                      //     verificationFailed: (FirebaseAuthException e) {},
+                      //     codeSent: (String verificationId, int? resendToken) {
+                      //       MyPhone.verify = verificationId;
+                      //       Navigator.pushNamed(context, 'otp');
+                      //     },
+                      //     codeAutoRetrievalTimeout: (String verificationId) {},
+                      //   );
+                      Navigator.pushNamed(context, 'otp');
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Colors.blue.shade600,
