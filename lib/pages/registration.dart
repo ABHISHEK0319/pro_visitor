@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pro_visitor/Screens/my_profile.dart';
 
 class MyRegistrationPage extends StatefulWidget {
   const MyRegistrationPage({Key? key}) : super(key: key);
