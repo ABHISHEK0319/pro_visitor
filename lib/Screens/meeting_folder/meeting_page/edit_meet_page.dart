@@ -36,7 +36,7 @@ class _AddEditMeetingPageState extends State<AddEditMeetingPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text('Add Notes'),
+          title: const Text('Add Meetings'),
           titleTextStyle: const TextStyle(
             fontSize: 24.0,
             fontWeight: FontWeight.bold,

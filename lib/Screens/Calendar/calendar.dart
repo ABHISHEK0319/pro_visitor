@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pro_visitor/Screens/Calendra/event_editing_page.dart';
-import 'package:pro_visitor/Screens/Calendra/event_provider.dart';
+import 'package:pro_visitor/Screens/Calendar/event_editing_page.dart';
+import 'package:pro_visitor/Screens/Calendar/event_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
