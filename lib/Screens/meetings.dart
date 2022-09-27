@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:pro_visitor/db/meeting_database.dart';
 import 'package:pro_visitor/models/user_meeting.dart';
-
 import '../user_dialogBox/add_edit_meeting.dart';
 
 class MeetingActivity extends StatelessWidget {
