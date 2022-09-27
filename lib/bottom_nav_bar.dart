@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pro_visitor/Screens/Todo%20folder/todo_page/note_page.dart';
-import 'package:pro_visitor/Screens/appointments.dart';
 import 'package:pro_visitor/Screens/Calendra/calendar.dart';
 import 'package:pro_visitor/Screens/meeting_folder/meeting_page/meet_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'Screens/Appoint_Folder/appoint_page/appoint_list_page.dart';
 import 'Screens/my_profile.dart';
 
 class MyBottomNavBar extends StatefulWidget {
@@ -29,7 +29,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
     const CalendarActivity(),
     const NotesPage(),
     const MeetingsPage(),
-    const AppointmentActivity(),
+    const AppointApp(),
   ];
 
 // Here my build method and define all widgets..........
