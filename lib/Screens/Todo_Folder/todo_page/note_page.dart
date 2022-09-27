@@ -1,9 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:pro_visitor/Screens/todo_Database/todo_dbhelper.dart';
-import 'package:pro_visitor/Screens/todo_models/todo_data.dart';
-import 'package:pro_visitor/Screens/todo_page/edit_note_page.dart';
-import 'package:pro_visitor/Screens/todo_widget/note_card_widget.dart';
-import 'package:pro_visitor/Screens/todo_page/note_detail_page.dart';
+import 'package:pro_visitor/Screens/Todo_Folder/todo_Database/todo_dbhelper.dart';
+import 'package:pro_visitor/Screens/Todo_Folder/todo_models/todo_data.dart';
+import 'package:pro_visitor/Screens/Todo_Folder/todo_page/edit_note_page.dart';
+import 'package:pro_visitor/Screens/Todo_Folder/todo_widget/note_card_widget.dart';
+import 'package:pro_visitor/Screens/Todo_Folder/todo_page/note_detail_page.dart';
+
+
+class TodoApp extends StatelessWidget {
+  static final String title = 'Notes SQLite';
+
+  @override
+  Widget build(BuildContext context) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: title,
+        themeMode: ThemeMode.dark,
+        theme: ThemeData(
+          primarySwatch: Colors.green,
+          primaryColor: Color(0xff3FC120),
+          appBarTheme: AppBarTheme(
+            backgroundColor: Color(0xff3FC120),
+            elevation: 0,
+          ),
+        ),
+        home: NotesPage(),
+      );
+}
 
 class NotesPage extends StatefulWidget {
   @override

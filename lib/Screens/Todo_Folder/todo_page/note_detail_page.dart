@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:pro_visitor/Screens/todo_Database/todo_dbhelper.dart';
-import 'package:pro_visitor/Screens/todo_models/todo_data.dart';
-import 'package:pro_visitor/Screens/todo_page/edit_note_page.dart';
+import 'package:pro_visitor/Screens/Todo_Folder/todo_Database/todo_dbhelper.dart';
+import 'package:pro_visitor/Screens/Todo_Folder/todo_models/todo_data.dart';
+import 'package:pro_visitor/Screens/Todo_Folder/todo_page/edit_note_page.dart';
 
 class NoteDetailPage extends StatefulWidget {
   final int noteId;
