@@ -99,7 +99,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
               onPressed: () async {
                 Navigator.pushNamedAndRemoveUntil(
                     context, 'registration', (route) => false);
-
                 //navigate directly to home page..
                 final prefs = await SharedPreferences.getInstance();
                 prefs.setBool('showHome', true);
