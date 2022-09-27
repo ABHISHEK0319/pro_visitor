@@ -5,28 +5,6 @@ import 'package:pro_visitor/Screens/Appoint_Folder/appoint_page/appoint_add_edit
 import 'package:pro_visitor/Screens/Appoint_Folder/appoint_widget/appoint_card_widget.dart';
 import 'package:pro_visitor/Screens/Appoint_Folder/appoint_page/appoint_detail_page.dart';
 
-class AppointApp extends StatelessWidget {
-  static const String title = 'Appoint SQLite';
-
-  const AppointApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: title,
-        themeMode: ThemeMode.dark,
-        theme: ThemeData(
-          primarySwatch: Colors.red,
-          primaryColor: const Color(0xffF44336),
-          appBarTheme: const AppBarTheme(
-            backgroundColor: Color(0xffF44336),
-            elevation: 0,
-          ),
-        ),
-        home: const AppointListPage(),
-      );
-}
-
 class AppointListPage extends StatefulWidget {
   const AppointListPage({Key? key}) : super(key: key);
 
@@ -62,16 +40,6 @@ class AppointListPageState extends State<AppointListPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Welcome To Visitor Log',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          //actions: [Icon(Icons.search), SizedBox(width: 12)],
-        ),
         body: Center(
           child: isLoading
               ? const CircularProgressIndicator()

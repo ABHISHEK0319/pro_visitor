@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pro_visitor/Screens/Todo%20folder/todo_page/note_page.dart';
-import 'package:pro_visitor/Screens/Calendra/calendar.dart';
+import 'package:pro_visitor/Screens/Calendar/calendar.dart';
 import 'package:pro_visitor/Screens/meeting_folder/meeting_page/meet_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,7 +29,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
     const CalendarActivity(),
     const NotesPage(),
     const MeetingsPage(),
-    const AppointApp(),
+    const AppointListPage(),
   ];
 
 // Here my build method and define all widgets..........

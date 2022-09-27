@@ -8,7 +8,7 @@ import 'package:pro_visitor/pages/registration.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Screens/Calendra/event_provider.dart';
+import 'Screens/Calendar/event_provider.dart';
 // import 'config/config.dart';
 
 Future<void> main() async {
