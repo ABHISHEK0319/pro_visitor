@@ -41,6 +41,8 @@ dependencies:
   syncfusion_flutter_core: ^20.2.48
   json_annotation: ^4.4.0
   pinput: ^2.2.12
+  smooth_page_indicator: ^1.0.0+2
+  shared_preferences: ^2.0.15
 
 
   # The following adds the Cupertino Icons font to your application.

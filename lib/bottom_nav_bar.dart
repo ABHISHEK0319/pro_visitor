@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:pro_visitor/Screens/Todo%20folder/todo_page/note_page.dart';
 import 'package:pro_visitor/Screens/appointments.dart';
 import 'package:pro_visitor/Screens/Calendra/calendar.dart';
-import 'package:pro_visitor/Screens/meetings.dart';
+import 'package:pro_visitor/Screens/meeting_folder/meeting_page/meet_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'Screens/my_profile.dart';
 
 class MyBottomNavBar extends StatefulWidget {
   const MyBottomNavBar({Key? key}) : super(key: key);
@@ -25,7 +28,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
   final List<Widget> _pages = [
     const CalendarActivity(),
     const NotesPage(),
-    const MeetingActivity(),
+    const MeetingsPage(),
     const AppointmentActivity(),
   ];
 
@@ -38,18 +41,25 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.more_vert, color: Colors.white),
-            tooltip: 'Settings',
+            tooltip: 'Profile',
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('This is a snackbar'),
-                  duration: Duration(milliseconds: 1500),
-                  width: 280.0, // Width of the SnackBar.
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 8.0, // Inner padding for SnackBar content.
-                  ),
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const MyProfile(),
                 ),
               );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.logout, color: Colors.white),
+            tooltip: 'OnboardingScreen',
+            onPressed: () async {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, 'OnboardingPage', (route) => false);
+
+              //navigate directly to home page..
+              final prefs = await SharedPreferences.getInstance();
+              prefs.setBool('showHome', false);
             },
           ),
         ],

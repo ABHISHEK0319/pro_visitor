@@ -1,4 +1,4 @@
-final String tableNotes = 'notes';
+const String tableNotes = 'notes';
 
 class NoteFields {
   static final List<String> values = [
@@ -6,10 +6,10 @@ class NoteFields {
     id, title, description, datetime,
   ];
 
-  static final String id = '_id';
-  static final String title = 'title';
-  static final String datetime = 'datetime';
-  static final String description = 'description';
+  static const String id = '_id';
+  static const String title = 'title';
+  static const String datetime = 'datetime';
+  static const String description = 'description';
 }
 
 class Note {

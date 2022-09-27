@@ -1,16 +1,19 @@
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pro_visitor/bottom_nav_bar.dart';
+import 'package:pro_visitor/onBoardingScreens/welcome_pages.dart';
 import 'package:pro_visitor/pages/login_otp.dart';
 import 'package:pro_visitor/pages/login_phone.dart';
 import 'package:pro_visitor/pages/registration.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Screens/Calendra/event_provider.dart';
 // import 'config/config.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -26,12 +29,17 @@ Future<void> main() async {
   //     'profile': (context) => const MyProfile(),
   //   },
   // ));
-
-  runApp(const MyApp());
+  final prefs = await SharedPreferences.getInstance();
+  final showHome = prefs.getBool('showHome') ?? false;
+  runApp(MyApp(showHome: showHome));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final bool showHome;
+  const MyApp({
+    Key? key,
+    required this.showHome,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,15 +47,16 @@ class MyApp extends StatelessWidget {
       create: (context) => EventProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: 'registration',
+        initialRoute: 'OnboardingPage',
         routes: {
+          'OnboardingPage': (context) => const OnboardingPage(),
           'registration': (context) => const MyRegistrationPage(),
           'phone': (context) => const MyPhone(),
           'otp': (context) => const MyOtp(),
           'MyBottomNav': (context) => const MyBottomNavBar(),
         },
         title: 'Welcome to Visitor Log',
-        home: const Scaffold(
+        home: Scaffold(
           // appBar: AppBar(
           //   title: const Text('Welcome to Visitor Log'),
           //   actions: <Widget>[
@@ -69,7 +78,7 @@ class MyApp extends StatelessWidget {
           //     ),
           //   ],
           // ),
-          body: MyBottomNavBar(),
+          body: showHome ? const MyRegistrationPage() : const OnboardingPage(),
         ),
       ),
     );

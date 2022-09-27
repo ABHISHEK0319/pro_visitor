@@ -5,10 +5,22 @@ class MyProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'My Profile',
-        style: TextStyle(fontSize: 50.0),
+    return Scaffold(
+      body: Center(
+        child: Container(
+          width: 200,
+          height: 100,
+          color: Colors.black45,
+          child: const Center(
+            child: Text(
+              'My Profile',
+              style: TextStyle(
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            ),
+          ),
+        ),
       ),
     );
   }

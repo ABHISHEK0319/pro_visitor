@@ -1,18 +1,20 @@
 import 'package:path/path.dart';
 import 'package:pro_visitor/Screens/Todo%20folder/todo_dart.dart';
+import 'package:pro_visitor/Screens/meeting_folder/meet_model_dart.dart';
 import 'package:sqflite/sqflite.dart';
 
-class NotesDatabase {
-  static final NotesDatabase instance = NotesDatabase._init();
+/// NotesDatabase replace with MeetingsDatabase
+class MeetingsDatabase {
+  static final MeetingsDatabase instance = MeetingsDatabase._init();
 
   static Database? _database;
 
-  NotesDatabase._init();
+  MeetingsDatabase._init();
 
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await _initDB('notes2.db');
+    _database = await _initDB('vistloglocal.db');
     return _database!;
   }
 
@@ -28,16 +30,18 @@ class NotesDatabase {
     const textType = 'TEXT NOT NULL';
 
     await db.execute('''
-CREATE TABLE $tableNotes ( 
-  ${NoteFields.id} $idType, 
-  ${NoteFields.title} $textType,
-  ${NoteFields.datetime} $textType,
-  ${NoteFields.description} $textType
+CREATE TABLE $tableMeeting ( 
+  ${MeetingFields.id} $idType, 
+  ${MeetingFields.title} $textType,
+  ${MeetingFields.date} $textType,
+   ${MeetingFields.time} $textType,
+  ${MeetingFields.myContact} $textType,
+  ${MeetingFields.createdBy} $textType
   )
   ''');
   }
 
-  Future<Note> create(Note note) async {
+  Future<Meeting> create(Meeting meeting) async {
     final db = await instance.database;
 
     // final json = note.toJson();
@@ -48,28 +52,28 @@ CREATE TABLE $tableNotes (
     // final id = await db
     //     .rawInsert('INSERT INTO table_name ($columns) VALUES ($values)');
 
-    final id = await db.insert(tableNotes, note.toJson());
-    return note.copy(id: id);
+    final id = await db.insert(tableMeeting, meeting.toJson());
+    return meeting.copy(id: id);
   }
 
-  Future<Note> readNote(int id) async {
+  Future<Meeting> readMeeting(int id) async {
     final db = await instance.database;
 
     final maps = await db.query(
-      tableNotes,
-      columns: NoteFields.values,
-      where: '${NoteFields.id} = ?',
+      tableMeeting,
+      columns: MeetingFields.values,
+      where: '${MeetingFields.id} = ?',
       whereArgs: [id],
     );
 
     if (maps.isNotEmpty) {
-      return Note.fromJson(maps.first);
+      return Meeting.fromJson(maps.first);
     } else {
       throw Exception('ID $id not found');
     }
   }
 
-  Future<List<Note>> readAllNotes() async {
+  Future<List<Meeting>> readAllMeeting() async {
     final db = await instance.database;
 
     //final orderBy = '${NoteFields.datetime} ASC';
@@ -78,10 +82,10 @@ CREATE TABLE $tableNotes (
 
     final result = await db.query(tableNotes);
 
-    return result.map((json) => Note.fromJson(json)).toList();
+    return result.map((json) => Meeting.fromJson(json)).toList();
   }
 
-  Future<int> update(Note note) async {
+  Future<int> update(Meeting meeting) async {
     final db = await instance.database;
 
     // final json = note.toJson();
@@ -94,10 +98,10 @@ CREATE TABLE $tableNotes (
     // 'UPDATE INTO table_name ($columns) VALUES ($values), WHERE name = ?');
 
     return db.update(
-      tableNotes,
-      note.toJson(),
-      where: '${NoteFields.id} = ?',
-      whereArgs: [note.id],
+      tableMeeting,
+      meeting.toJson(),
+      where: '${MeetingFields.id} = ?',
+      whereArgs: [meeting.id],
     );
   }
 
@@ -108,8 +112,8 @@ CREATE TABLE $tableNotes (
     //     await db.rawUpdate('DELETE FROM table_name WHERE id = ?');
 
     return await db.delete(
-      tableNotes,
-      where: '${NoteFields.id} = ?',
+      tableMeeting,
+      where: '${MeetingFields.id} = ?',
       whereArgs: [id],
     );
   }
