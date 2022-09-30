@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pro_visitor/Screens/meeting_folder/meeting_page/model_meeting.dart';
+import 'package:pro_visitor/db/database.dart';
 import '../meet_model_dart.dart';
 import '../meeting_dbhelper.dart';
 import '../meeting_widget/meet_card_widget.dart';
@@ -13,7 +15,7 @@ class MeetingsPage extends StatefulWidget {
 }
 
 class _MeetingsPageState extends State<MeetingsPage> {
-  late List<Meeting> meetings;
+  late List<ModelMeeting> meetings = [];
   bool isLoading = false;
 
   @override
@@ -25,7 +27,7 @@ class _MeetingsPageState extends State<MeetingsPage> {
 
   @override
   void dispose() {
-    MeetingsDatabase.instance.close();
+    //DbHelper.close();
 
     super.dispose();
   }
@@ -33,8 +35,24 @@ class _MeetingsPageState extends State<MeetingsPage> {
   Future refreshMeetings() async {
     setState(() => isLoading = true);
 
-    meetings = await MeetingsDatabase.instance.readAllMeeting();
+    if (meetings.isNotEmpty) {
+      meetings.clear();
+    }
+    // meetings = await MeetingsDatabase.instance.readAllMeeting();
 
+    List<Map<String, dynamic>> rs = await DbHelper.queryAll("Meeting_Record");
+    for (var i = 0; i < rs.length; i++) {
+      meetings.add(
+        ModelMeeting(
+          meetId: rs[i]["meetId"],
+          meetHeader: rs[i]["meetHeader"].toString(),
+          meetDate: rs[i]["meetDate"].toString(),
+          meetTime: rs[i]["meetTime"].toString(),
+          meetContact: rs[i]["meetContact"].toString(),
+          createdBy: rs[i]["createdBy"].toString(),
+        ),
+      );
+    }
     setState(() => isLoading = false);
   }
 
@@ -86,8 +104,9 @@ class _MeetingsPageState extends State<MeetingsPage> {
 
           return GestureDetector(
             onTap: () async {
+              int i = int.parse(meetings[index].meetId.toString());
               await Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => MeetDetailPage(meetId: meeting.id!),
+                builder: (context) => MeetDetailPage(meetId: i),
               ));
               refreshMeetings();
             },

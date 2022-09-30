@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pro_visitor/Screens/meeting_folder/meet_model_dart.dart';
+import 'package:pro_visitor/Screens/meeting_folder/meeting_page/model_meeting.dart';
 
 final _lightColors = [
   Colors.amber.shade300,
@@ -17,7 +17,7 @@ class MeetCardWidget extends StatelessWidget {
     required this.index,
   }) : super(key: key);
 
-  final Meeting meeting;
+  final ModelMeeting meeting;
   final int index;
 
   @override
@@ -37,7 +37,7 @@ class MeetCardWidget extends StatelessWidget {
               title: Row(
                 children: [
                   Text(
-                    meeting.title,
+                    meeting.meetHeader,
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 20.0,
@@ -62,14 +62,14 @@ class MeetCardWidget extends StatelessWidget {
               subtitle: Row(
                 children: [
                   Text(
-                    meeting.date,
+                    meeting.meetDate,
                     style: const TextStyle(
                       color: Colors.black87,
                       fontSize: 18,
                     ),
                   ),
                   Text(
-                    meeting.time,
+                    meeting.meetTime,
                     style: const TextStyle(
                       color: Colors.black87,
                       fontSize: 18,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../meet_model_dart.dart';
-import '../meeting_dbhelper.dart';
+import 'package:pro_visitor/Screens/meeting_folder/meeting_page/model_meeting.dart';
+import 'package:pro_visitor/db/database.dart';
 import '../meeting_widget/meet_form_widget.dart';
 
 class AddEditMeetingPage extends StatefulWidget {
-  final Meeting? meeting;
+  final ModelMeeting? meeting;
 
   const AddEditMeetingPage({
     Key? key,
@@ -16,20 +16,21 @@ class AddEditMeetingPage extends StatefulWidget {
 
 class _AddEditMeetingPageState extends State<AddEditMeetingPage> {
   final _formKey = GlobalKey<FormState>();
-  late String title;
-  late String date;
-  late String time;
-  late String myContact;
+  late String meetId;
+  late String meetHeader;
+  late String meetDate;
+  late String meetTime;
+  late String meetContact;
   late String createdBy;
 
   @override
   void initState() {
     super.initState();
-
-    title = widget.meeting?.title ?? '';
-    date = widget.meeting?.date ?? '';
-    time = widget.meeting?.time ?? '';
-    myContact = widget.meeting?.myContact ?? '';
+    meetId = widget.meeting?.meetId ?? '0';
+    meetHeader = widget.meeting?.meetHeader ?? '';
+    meetDate = widget.meeting?.meetDate ?? '';
+    meetTime = widget.meeting?.meetTime ?? '';
+    meetContact = widget.meeting?.meetContact ?? '';
     createdBy = widget.meeting?.createdBy ?? '';
   }
 
@@ -46,16 +47,19 @@ class _AddEditMeetingPageState extends State<AddEditMeetingPage> {
         body: Form(
           key: _formKey,
           child: MeetFormWidget(
-            title: title,
-            date: date,
-            time: time,
-            myContact: myContact,
+            title: meetHeader,
+            date: meetDate,
+            time: meetTime,
+            myContact: meetContact,
             createdBy: createdBy,
-            onChangedTitle: (title) => setState(() => this.title = title),
-            onChangedDate: (date) => setState(() => this.date = date),
-            onChangedTime: (time) => setState(() => this.time = time),
-            onChangedMyContact: (myContact) =>
-                setState(() => this.myContact = myContact),
+            onChangedTitle: (meetHeader) =>
+                setState(() => this.meetHeader = meetHeader),
+            onChangedDate: (meetDate) =>
+                setState(() => this.meetDate = meetDate),
+            onChangedTime: (meetTime) =>
+                setState(() => this.meetTime = meetTime),
+            onChangedMyContact: (meetContact) =>
+                setState(() => this.meetContact = meetContact),
             onChangedCreatedBy: (createdBy) =>
                 setState(() => this.createdBy = createdBy),
           ),
@@ -63,7 +67,8 @@ class _AddEditMeetingPageState extends State<AddEditMeetingPage> {
       );
 
   Widget buildButton() {
-    final isFormValid = title.isNotEmpty && date.isNotEmpty && time.isNotEmpty;
+    final isFormValid =
+        meetHeader.isNotEmpty && meetDate.isNotEmpty && meetTime.isNotEmpty;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
@@ -92,36 +97,63 @@ class _AddEditMeetingPageState extends State<AddEditMeetingPage> {
 
     if (isValid) {
       final isUpdating = widget.meeting != null;
-
+      // final isUpdating = int.parse(meetId) > 0;
       if (isUpdating) {
-        await updateMeeting();
+        // await updateMeeting();
       } else {
         await addMeeting();
       }
     }
   }
 
-  Future updateMeeting() async {
-    final meeting = widget.meeting!.copy(
-      title: title,
-      date: date,
-      time: time,
-      myContact: myContact,
-      createdBy: createdBy,
-    );
-
-    await MeetingsDatabase.instance.update(meeting);
-  }
+  // Future updateMeeting() async {
+  //   final meeting = widget.meeting!.copy(
+  //     meetId: meetId,
+  //     meetHeader: meetHeader,
+  //     meetDate: meetDate,
+  //     meetTime: meetTime,
+  //     meetContact: meetContact,
+  //     createdBy: createdBy,
+  //   );
+  //   final db = await DbHelper.instance.getDatabase;
+  //   await db.rawUpdate("UPDATE Meeting_Record SET meetHeader =?, meetDate=?, meetTime=?, meetContact=?, createdBy=? WHERE meetId =?)",
+  //       [meetHeader, meetDate, meetTime, meetContact, createdBy, meetId]);
+  // }
 
   Future addMeeting() async {
-    final meeting = Meeting(
-      title: title,
-      date: date,
-      time: time,
-      myContact: myContact,
-      createdBy: createdBy,
-    );
+    // final meeting = Meeting(
+    //   meetHeader: meetHeader,
+    //   meetDate: meetDate,
+    //   meetTime: meetTime,
+    //   meetContact: meetContact,
+    //   createdBy: createdBy,
+    // );
+    final db = await DbHelper.instance.getDatabase;
+    List<Map<String, dynamic>> lastId = await DbHelper.querySpecific(
+        "SELECT IFNULL(MAX(meetId), 0) AS LastId FROM Meeting_Record");
+    final i = int.parse(lastId.asMap()[0].toString());
 
-    await MeetingsDatabase.instance.create(meeting);
+    if (i >= 0) {
+      List<Map<String, dynamic>> rs = await db.rawQuery(
+          "INSERT INTO Meeting_Record VALUES (?,?,?,?,?,?)", [
+        i + 1,
+        meetHeader,
+        meetDate,
+        meetTime,
+        meetContact,
+        int.parse(createdBy)
+      ]);
+
+      int r = int.parse(rs.asMap()[0].toString());
+
+      if (r > 0) {
+        print("Saved");
+      } else {
+        print(" Not Saved");
+      }
+      // await db.rawInsert(
+      //     "INSERT INTO Meeting_Record VALUES (?,?,?,?,?)",
+      //     [meetHeader, meetDate, meetTime, meetContact, createdBy]);
+    }
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pro_visitor/Screens/meeting_folder/meeting_page/model_meeting.dart';
+import 'package:pro_visitor/db/database.dart';
 import '../meet_model_dart.dart';
 import '../meeting_dbhelper.dart';
 import 'edit_meet_page.dart';
@@ -16,20 +18,23 @@ class MeetDetailPage extends StatefulWidget {
 }
 
 class _MeetDetailPageState extends State<MeetDetailPage> {
-  late Meeting meeting;
+  late int id;
+  late ModelMeeting meeting;
   bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
-
-    refreshNote();
+    id = widget.meetId;
+    refreshMeeting();
   }
 
-  Future refreshNote() async {
+  Future refreshMeeting() async {
     setState(() => isLoading = true);
 
-    meeting = await MeetingsDatabase.instance.readMeeting(widget.meetId);
+    final db = await DbHelper.instance.getDatabase;
+    List<Map<String, dynamic>> rs =
+        await DbHelper.querySearch("Meeting_Record", "meetId =?", [id]);
 
     setState(() => isLoading = false);
   }
@@ -52,7 +57,7 @@ class _MeetDetailPageState extends State<MeetDetailPage> {
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   children: [
                     Text(
-                      meeting.title,
+                      meeting.meetHeader,
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 20,
@@ -61,7 +66,7 @@ class _MeetDetailPageState extends State<MeetDetailPage> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      meeting.date,
+                      meeting.meetDate,
                       style: const TextStyle(
                         color: Colors.black87,
                         fontSize: 18.0,
@@ -69,13 +74,13 @@ class _MeetDetailPageState extends State<MeetDetailPage> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      meeting.time,
+                      meeting.meetTime,
                       style: const TextStyle(
                           color: Colors.black87, fontSize: 18.0),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      meeting.myContact,
+                      meeting.meetContact,
                       style: const TextStyle(
                           color: Colors.black87, fontSize: 18.0),
                     ),
@@ -99,14 +104,14 @@ class _MeetDetailPageState extends State<MeetDetailPage> {
           builder: (context) => AddEditMeetingPage(meeting: meeting),
         ));
 
-        refreshNote();
+        refreshMeeting();
       });
 
   Widget deleteButton() => IconButton(
         icon: const Icon(Icons.delete),
         onPressed: () async {
           Navigator.of(context).pop();
-          await MeetingsDatabase.instance.delete(widget.meetId);
+          await DbHelper.deleteData("Meeting_Record", "meetId =?", [id]);
         },
       );
 }
