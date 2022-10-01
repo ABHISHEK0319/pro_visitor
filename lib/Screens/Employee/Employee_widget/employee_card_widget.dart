@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pro_visitor/Screens/Appoint_Folder/appoint_models/appoint_data.dart';
+import '../employee_dart.dart';
 
 final _lightColors = [
   Colors.amber.shade300,
@@ -10,27 +10,23 @@ final _lightColors = [
   Colors.tealAccent.shade100
 ];
 
-class AppointCardWidget extends StatelessWidget {
-  AppointCardWidget({
+class EmployeeCardWidget extends StatelessWidget {
+  const EmployeeCardWidget({
     Key? key,
-    required this.appoint,
+    required this.emp,
     required this.index,
   }) : super(key: key);
 
-  final Appoint_Data appoint;
+  final Employee emp;
   final int index;
 
   @override
   Widget build(BuildContext context) {
-    /// Pick colors from the accent colors based on index
     final color = _lightColors[index % _lightColors.length];
-    //final time = DateFormat.yMMMd().format(note.datetime);
-    //final minHeight = getMinHeight(index);
 
     return Card(
       color: color,
       child: Container(
-        //constraints: BoxConstraints(minHeight: minHeight),
         padding: const EdgeInsets.all(1),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -39,7 +35,7 @@ class AppointCardWidget extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.description_outlined),
               title: Text(
-                appoint.name,
+                emp.empname,
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 20.0,
@@ -48,14 +44,7 @@ class AppointCardWidget extends StatelessWidget {
               ),
               //SizedBox(height: 4),
               subtitle: Text(
-                appoint.datetime,
-                style: const TextStyle(
-                  color: Colors.black87,
-                  fontSize: 18,
-                ),
-              ),
-              trailing: Text(
-                appoint.contact,
+                emp.empcontact,
                 style: const TextStyle(
                   color: Colors.black87,
                   fontSize: 18,

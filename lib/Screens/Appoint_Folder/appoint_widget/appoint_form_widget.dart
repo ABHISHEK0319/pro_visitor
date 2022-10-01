@@ -25,18 +25,18 @@ class AppointFormWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               buildName(),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               buildDatetime(),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               buildContact(),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               buildReason(),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
             ],
           ),
         ),
@@ -45,12 +45,12 @@ class AppointFormWidget extends StatelessWidget {
   Widget buildName() => TextFormField(
         maxLines: 1,
         initialValue: name,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.bold,
           fontSize: 20,
         ),
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           icon: Icon(Icons.person),
           border: OutlineInputBorder(),
           hintText: 'Name',
@@ -63,12 +63,12 @@ class AppointFormWidget extends StatelessWidget {
   Widget buildDatetime() => TextFormField(
         maxLines: 1,
         initialValue: datetime,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.black,
           //fontWeight: FontWeight.bold,
           fontSize: 18,
         ),
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           icon: Icon(Icons.date_range_outlined),
           border: OutlineInputBorder(),
           hintText: 'Datetime',
@@ -84,11 +84,11 @@ class AppointFormWidget extends StatelessWidget {
         keyboardType: TextInputType.phone,
         maxLines: 1,
         initialValue: contact,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.black,
           fontSize: 18,
         ),
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           icon: Icon(Icons.call),
           border: OutlineInputBorder(),
           hintText: 'Contact',
@@ -103,11 +103,11 @@ class AppointFormWidget extends StatelessWidget {
   Widget buildReason() => TextFormField(
         maxLines: 3,
         initialValue: reason,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.black,
           fontSize: 18,
         ),
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           icon: Icon(Icons.description_outlined),
           border: OutlineInputBorder(),
           hintText: 'Reason',

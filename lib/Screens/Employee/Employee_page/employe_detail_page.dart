@@ -1,38 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:pro_visitor/Screens/meeting_folder/meeting_page/model_meeting.dart';
-import 'package:pro_visitor/db/database.dart';
-import 'edit_meet_page.dart';
+import '../employee_dart.dart';
+import '../employee_dbhelper.dart';
+import 'edit_employee_page.dart';
 
-class MeetDetailPage extends StatefulWidget {
-  final int meetId;
+class EmployeeDetailPage extends StatefulWidget {
+  final int empId;
 
-  const MeetDetailPage({
+  const EmployeeDetailPage({
     Key? key,
-    required this.meetId,
+    required this.empId,
   }) : super(key: key);
 
   @override
-  State<MeetDetailPage> createState() => _MeetDetailPageState();
+  State<EmployeeDetailPage> createState() => _EmployeeDetailPageState();
 }
 
-class _MeetDetailPageState extends State<MeetDetailPage> {
-  late int id;
-  late ModelMeeting meeting;
+class _EmployeeDetailPageState extends State<EmployeeDetailPage> {
+  late Employee employee;
   bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    id = widget.meetId;
-    refreshMeeting();
+
+    refreshEmp();
   }
 
-  Future refreshMeeting() async {
+  Future refreshEmp() async {
     setState(() => isLoading = true);
 
-    final db = await DbHelper.instance.getDatabase;
-    List<Map<String, dynamic>> rs =
-        await DbHelper.querySearch("Meeting_Record", "meetId =?", [id]);
+    this.employee = await NotesDatabase.instance.readEmp(widget.empId);
 
     setState(() => isLoading = false);
   }
@@ -40,7 +37,7 @@ class _MeetDetailPageState extends State<MeetDetailPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text('View Note'),
+          title: const Text('View Employee'),
           titleTextStyle: const TextStyle(
             fontSize: 24.0,
             fontWeight: FontWeight.bold,
@@ -55,7 +52,7 @@ class _MeetDetailPageState extends State<MeetDetailPage> {
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   children: [
                     Text(
-                      meeting.meetHeader,
+                      employee.empname,
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 20,
@@ -64,7 +61,8 @@ class _MeetDetailPageState extends State<MeetDetailPage> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      meeting.meetDate,
+                      employee.empcontact,
+                      //DateFormat.yMMMd().format(note.createdTime),
                       style: const TextStyle(
                         color: Colors.black87,
                         fontSize: 18.0,
@@ -72,19 +70,7 @@ class _MeetDetailPageState extends State<MeetDetailPage> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      meeting.meetTime,
-                      style: const TextStyle(
-                          color: Colors.black87, fontSize: 18.0),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      meeting.meetContact,
-                      style: const TextStyle(
-                          color: Colors.black87, fontSize: 18.0),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      meeting.createdBy,
+                      employee.empdestination,
                       style: const TextStyle(
                           color: Colors.black87, fontSize: 18.0),
                     )
@@ -99,17 +85,17 @@ class _MeetDetailPageState extends State<MeetDetailPage> {
         if (isLoading) return;
 
         await Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => AddEditMeetingPage(meeting: meeting),
+          builder: (context) => AddEditEmployeePage(emp: employee),
         ));
 
-        refreshMeeting();
+        refreshEmp();
       });
 
   Widget deleteButton() => IconButton(
         icon: const Icon(Icons.delete),
         onPressed: () async {
           Navigator.of(context).pop();
-          await DbHelper.deleteData("Meeting_Record", "meetId =?", [id]);
+          await NotesDatabase.instance.delete(widget.empId);
         },
       );
 }

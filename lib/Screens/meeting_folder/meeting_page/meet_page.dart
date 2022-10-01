@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pro_visitor/Screens/meeting_folder/meeting_page/model_meeting.dart';
 import 'package:pro_visitor/db/database.dart';
-import '../meet_model_dart.dart';
-import '../meeting_dbhelper.dart';
 import '../meeting_widget/meet_card_widget.dart';
 import 'edit_meet_page.dart';
 import 'meet_detail_page.dart';
@@ -95,10 +93,6 @@ class _MeetingsPageState extends State<MeetingsPage> {
   Widget buildMeetings() => ListView.builder(
         padding: const EdgeInsets.all(2),
         itemCount: meetings.length,
-        /*ListView: (index) => StaggeredTile.fit(2),
-        crossAxisCount: 4,
-        mainAxisSpacing: 4,
-        crossAxisSpacing: 4,*/
         itemBuilder: (context, index) {
           final meeting = meetings[index];
 
