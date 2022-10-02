@@ -5,6 +5,7 @@ import 'package:pro_visitor/onBoardingScreens/welcome_pages.dart';
 import 'package:pro_visitor/pages/login_otp.dart';
 import 'package:pro_visitor/pages/login_phone.dart';
 import 'package:pro_visitor/pages/registration.dart';
+import 'package:pro_visitor/pages/splashscreen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +14,8 @@ import 'Screens/Calendar/event_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -20,7 +23,6 @@ Future<void> main() async {
   ]);
 
   //await Firebase.initializeApp();
-
   // runApp(MaterialApp(
   //   initialRoute: 'phone',
   //   routes: {
@@ -29,6 +31,7 @@ Future<void> main() async {
   //     'profile': (context) => const MyProfile(),
   //   },
   // ));
+
   final prefs = await SharedPreferences.getInstance();
   final showHome = prefs.getBool('showHome') ?? false;
   runApp(MyApp(showHome: showHome));
@@ -47,8 +50,9 @@ class MyApp extends StatelessWidget {
       create: (context) => EventProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: 'OnboardingPage',
+        initialRoute: 'SplashScreen',
         routes: {
+          'SplashScreen': (context) => const SplashScreen(),
           'OnboardingPage': (context) => const OnboardingPage(),
           'registration': (context) => const MyRegistrationPage(),
           'phone': (context) => const MyPhone(),
