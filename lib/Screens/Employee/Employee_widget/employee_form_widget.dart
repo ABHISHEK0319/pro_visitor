@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 class EmployeeFormWidget extends StatelessWidget {
   final String? name;
   final String? contact;
-  final String? destination;
+  final String? designation;
   final ValueChanged<String> onChangedName;
   final ValueChanged<String> onChangedContact;
-  final ValueChanged<String> onChangedDestination;
+  final ValueChanged<String> onChangedDesignation;
 
   const EmployeeFormWidget({
     Key? key,
     this.name = '',
     this.contact = '',
-    this.destination = '',
+    this.designation = '',
     required this.onChangedName,
     required this.onChangedContact,
-    required this.onChangedDestination,
+    required this.onChangedDesignation,
   }) : super(key: key);
 
   @override
@@ -73,7 +73,7 @@ class EmployeeFormWidget extends StatelessWidget {
 
   Widget buildDescription() => TextFormField(
         maxLines: 5,
-        initialValue: destination,
+        initialValue: designation,
         style: const TextStyle(
           color: Colors.black,
           fontSize: 20,
@@ -81,12 +81,12 @@ class EmployeeFormWidget extends StatelessWidget {
         decoration: const InputDecoration(
           icon: Icon(Icons.description_outlined),
           border: OutlineInputBorder(),
-          hintText: 'Destination',
+          hintText: 'designation',
           hintStyle: TextStyle(color: Colors.black38),
         ),
         validator: (title) => title != null && title.isEmpty
-            ? 'The destination cannot be empty'
+            ? 'The designation cannot be empty'
             : null,
-        onChanged: onChangedDestination,
+        onChanged: onChangedDesignation,
       );
 }

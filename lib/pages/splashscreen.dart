@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:pro_visitor/onBoardingScreens/welcome_pages.dart';
 
 // void main() {
 //   SystemChrome.setSystemUIOverlayStyle(

@@ -40,28 +40,28 @@ class _EmployeePageState extends State<EmployeePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        // appBar: AppBar(
-        //   title: const Text(
-        //     'Welcome To Visitor Log',
-        //     style: TextStyle(
-        //       fontSize: 24,
-        //       fontWeight: FontWeight.bold,
-        //     ),
-        //   ),
-        //   //actions: [Icon(Icons.search), SizedBox(width: 12)],
-        // ),
+        appBar: AppBar(
+          title: const Text(
+            'Employee',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          //actions: [Icon(Icons.search), SizedBox(width: 12)],
+        ),
         body: Center(
           child: isLoading
               ? const CircularProgressIndicator()
               : employees.isEmpty
                   ? const Text(
-                      'No Notes',
+                      'No Employee',
                       style: TextStyle(color: Color(0xff3FC120), fontSize: 24),
                     )
-                  : buildNotes(),
+                  : buildEmp(),
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: const Color(0xff3FC120),
+          backgroundColor: Colors.blue,
           child: const Icon(Icons.add),
           onPressed: () async {
             await Navigator.of(context).push(
@@ -74,7 +74,7 @@ class _EmployeePageState extends State<EmployeePage> {
         ),
       );
 
-  Widget buildNotes() => ListView.builder(
+  Widget buildEmp() => ListView.builder(
         padding: const EdgeInsets.all(2),
         itemCount: employees.length,
         itemBuilder: (context, index) {

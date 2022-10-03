@@ -70,7 +70,7 @@ class _EmployeeDetailPageState extends State<EmployeeDetailPage> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      employee.empdestination,
+                      employee.empdesignation,
                       style: const TextStyle(
                           color: Colors.black87, fontSize: 18.0),
                     )

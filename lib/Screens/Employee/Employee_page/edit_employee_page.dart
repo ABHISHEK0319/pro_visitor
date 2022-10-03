@@ -18,7 +18,7 @@ class _AddEditEmployeePageState extends State<AddEditEmployeePage> {
   final _formKey = GlobalKey<FormState>();
   late String name;
   late String contact;
-  late String destination;
+  late String designation;
 
   @override
   void initState() {
@@ -26,7 +26,7 @@ class _AddEditEmployeePageState extends State<AddEditEmployeePage> {
 
     name = widget.emp?.empname ?? '';
     contact = widget.emp?.empcontact ?? '';
-    destination = widget.emp?.empdestination ?? '';
+    designation = widget.emp?.empdesignation ?? '';
   }
 
   @override
@@ -44,19 +44,19 @@ class _AddEditEmployeePageState extends State<AddEditEmployeePage> {
           child: EmployeeFormWidget(
             name: name,
             contact: contact,
-            destination: destination,
+            designation: designation,
             onChangedName: (name) => setState(() => this.name = name),
             onChangedContact: (contact) =>
                 setState(() => this.contact = contact),
-            onChangedDestination: (destination) =>
-                setState(() => this.destination = destination),
+            onChangedDesignation: (designation) =>
+                setState(() => this.designation = designation),
           ),
         ),
       );
 
   Widget buildButton() {
     final isFormValid =
-        name.isNotEmpty && contact.isNotEmpty && destination.isNotEmpty;
+        name.isNotEmpty && contact.isNotEmpty && designation.isNotEmpty;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
@@ -98,7 +98,7 @@ class _AddEditEmployeePageState extends State<AddEditEmployeePage> {
     final emp = widget.emp!.copy(
       empname: name,
       empcontact: contact,
-      empdestination: destination,
+      empdesignation: designation,
     );
 
     await NotesDatabase.instance.update(emp);
@@ -108,7 +108,7 @@ class _AddEditEmployeePageState extends State<AddEditEmployeePage> {
     final emp = Employee(
       empname: name,
       empcontact: contact,
-      empdestination: destination,
+      empdesignation: designation,
     );
 
     await NotesDatabase.instance.create(emp);
