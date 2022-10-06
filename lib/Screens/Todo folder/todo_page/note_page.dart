@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pro_visitor/db/database.dart';
 import '../todo_dart.dart';
 import '../todo_dbhelper.dart';
 import '../todo_widget/note_card_widget.dart';
@@ -13,7 +14,7 @@ class NotesPage extends StatefulWidget {
 }
 
 class _NotesPageState extends State<NotesPage> {
-  late List<Note> notes;
+  late List<Note> notes = [];
   bool isLoading = false;
 
   @override
@@ -25,7 +26,7 @@ class _NotesPageState extends State<NotesPage> {
 
   @override
   void dispose() {
-    NotesDatabase.instance.close();
+    //DbHelper.close();
 
     super.dispose();
   }
@@ -33,7 +34,10 @@ class _NotesPageState extends State<NotesPage> {
   Future refreshNotes() async {
     setState(() => isLoading = true);
 
-    notes = await NotesDatabase.instance.readAllNotes();
+    // notes = await NotesDatabase.instance.readAllNotes();
+    notes = (await DbHelper.queryAll("Todo_Record"))
+        .map((json) => Note.fromJson(json))
+        .toList();
 
     setState(() => isLoading = false);
   }
@@ -76,20 +80,17 @@ class _NotesPageState extends State<NotesPage> {
   Widget buildNotes() => ListView.builder(
         padding: const EdgeInsets.all(2),
         itemCount: notes.length,
-        /*ListView: (index) => StaggeredTile.fit(2),
-        crossAxisCount: 4,
-        mainAxisSpacing: 4,
-        crossAxisSpacing: 4,*/
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) {
           final note = notes[index];
-
-          return GestureDetector(
-            onTap: () async {
-              await Navigator.of(context).push(MaterialPageRoute(
+          return InkWell(
+            onTap: () => setState(() {
+              Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => NoteDetailPage(noteId: note.id!),
               ));
-              refreshNotes();
-            },
+            }),
             child: NoteCardWidget(note: note, index: index),
           );
         },

@@ -128,32 +128,38 @@ class _AddEditMeetingPageState extends State<AddEditMeetingPage> {
     //   meetContact: meetContact,
     //   createdBy: createdBy,
     // );
+
     final db = await DbHelper.instance.getDatabase;
     List<Map<String, dynamic>> lastId = await DbHelper.querySpecific(
         "SELECT IFNULL(MAX(meetId), 0) AS LastId FROM Meeting_Record");
-    final i = int.parse(lastId.asMap()[0].toString());
+    String x = lastId.asMap().values.toList()[0].toString();
+    RegExp re = RegExp(r'"[^\d]"', caseSensitive: false, multiLine: false);
+    var result = re.allMatches(x);
+    // final i = int.parse(lastId[0].map().toString());
 
-    if (i >= 0) {
-      List<Map<String, dynamic>> rs = await db.rawQuery(
-          "INSERT INTO Meeting_Record VALUES (?,?,?,?,?,?)", [
-        i + 1,
-        meetHeader,
-        meetDate,
-        meetTime,
-        meetContact,
-        int.parse(createdBy)
-      ]);
+    final h = int.parse(result.toString());
+    print(h);
+    // if (i >= 0) {
+    //   List<Map<String, dynamic>> rs = await db.rawQuery(
+    //       "INSERT INTO Meeting_Record VALUES (?,?,?,?,?,?)", [
+    //     i + 1,
+    //     meetHeader,
+    //     meetDate,
+    //     meetTime,
+    //     meetContact,
+    //     int.parse(createdBy)
+    //   ]);
 
-      int r = int.parse(rs.asMap()[0].toString());
+    //   int r = int.parse(rs[0].toString());
 
-      if (r > 0) {
-        print("Saved");
-      } else {
-        print(" Not Saved");
-      }
-      // await db.rawInsert(
-      //     "INSERT INTO Meeting_Record VALUES (?,?,?,?,?)",
-      //     [meetHeader, meetDate, meetTime, meetContact, createdBy]);
-    }
+    //   if (r > 0) {
+    //     print("Saved");
+    //   } else {
+    //     print(" Not Saved");
+    //   }
+    //   // await db.rawInsert(
+    //   //     "INSERT INTO Meeting_Record VALUES (?,?,?,?,?)",
+    //   //     [meetHeader, meetDate, meetTime, meetContact, createdBy]);
+    // }
   }
 }

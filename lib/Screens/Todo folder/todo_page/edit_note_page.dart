@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../db/database.dart';
 import '../todo_dart.dart';
 import '../todo_dbhelper.dart';
 import '../todo_widget/note_form_widget.dart';
@@ -23,7 +24,6 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
   @override
   void initState() {
     super.initState();
-
     title = widget.note?.title ?? '';
     datetime = widget.note?.datetime ?? '';
     description = widget.note?.description ?? '';
@@ -101,7 +101,10 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
       description: description,
     );
 
-    await NotesDatabase.instance.update(note);
+    // await NotesDatabase.instance.update(note);
+
+    int result = await DbHelper.updateData(
+        "Todo_Record", note.toJson(), "id = ?", [note.id]);
   }
 
   Future addNote() async {
@@ -110,7 +113,9 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
       datetime: datetime,
       description: description,
     );
+    // final db = await DbHelper.instance.getDatabase;
+    int result = await DbHelper.insertData("Todo_Record", note.toJson());
 
-    await NotesDatabase.instance.create(note);
+    // await NotesDatabase.instance.create(note);
   }
 }

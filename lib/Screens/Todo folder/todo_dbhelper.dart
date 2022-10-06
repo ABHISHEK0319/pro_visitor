@@ -1,122 +1,141 @@
-import 'package:path/path.dart';
-import 'package:pro_visitor/Screens/Todo%20folder/todo_dart.dart';
-import 'package:sqflite/sqflite.dart';
+// import 'package:path/path.dart';
+// import 'package:pro_visitor/Screens/Todo%20folder/todo_dart.dart';
+// import 'package:sqflite/sqflite.dart';
+// import 'dart:io';
+// import 'package:flutter/services.dart';
 
-class NotesDatabase {
-  static final NotesDatabase instance = NotesDatabase._init();
+// class NotesDatabase {
+//   static const dbName = "visitloglocal.db";
+//   static const dbVersion = 1;
+//   static final NotesDatabase instance = NotesDatabase._init();
 
-  static Database? _database;
+//   static Database? _database;
 
-  NotesDatabase._init();
+//   NotesDatabase._init();
 
-  Future<Database> get database async {
-    if (_database != null) return _database!;
+//   Future<Database> get database async {
+//     if (_database != null) return _database!;
 
-    _database = await _initDB('notes2.db');
-    return _database!;
-  }
+//     _database = await _initDatabase();
+//     return _database!;
+//   }
 
-  Future<Database> _initDB(String filePath) async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, filePath);
+//   // Future<Database> _initDB(String filePath) async {
+//   //   final dbPath = await getDatabasesPath();
+//   //   final path = join(dbPath, filePath);
 
-    return await openDatabase(path, version: 1, onCreate: _createDB);
-  }
+//   //   return await openDatabase(path, version: 1);
+//   // }
 
-  Future _createDB(Database db, int version) async {
-    const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
-    const textType = 'TEXT NOT NULL';
+//   static _initDatabase() async {
+//     // final directory = await getApplicationDocumentsDirectory();
+//     String path = join(await getDatabasesPath(), dbName);
 
-    await db.execute('''
-CREATE TABLE $tableNotes ( 
-  ${NoteFields.id} $idType, 
-  ${NoteFields.title} $textType,
-  ${NoteFields.datetime} $textType,
-  ${NoteFields.description} $textType
-  )
-  ''');
-  }
+//     if (!(await databaseExists(path))) {
+//       ByteData data = await rootBundle.load(join("assets/DBLocal", dbName));
+//       List<int> bytes =
+//           data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+//       await File(path).writeAsBytes(bytes);
+//       // print('database copied');
 
-  Future<Note> create(Note note) async {
-    final db = await instance.database;
+//     }
+//     return await openDatabase(path, version: dbVersion);
+//   }
 
-    // final json = note.toJson();
-    // final columns =
-    //     '${NoteFields.title}, ${NoteFields.description}, ${NoteFields.time}';
-    // final values =
-    //     '${json[NoteFields.title]}, ${json[NoteFields.description]}, ${json[NoteFields.time]}';
-    // final id = await db
-    //     .rawInsert('INSERT INTO table_name ($columns) VALUES ($values)');
+// //   Future _createDB(Database db, int version) async {
+// //     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
+// //     const textType = 'TEXT NOT NULL';
 
-    final id = await db.insert(tableNotes, note.toJson());
-    return note.copy(id: id);
-  }
+// //     await db.execute('''
+// // CREATE TABLE $tableNotes (
+// //   ${NoteFields.id} $idType,
+// //   ${NoteFields.title} $textType,
+// //   ${NoteFields.datetime} $textType,
+// //   ${NoteFields.description} $textType
+// //   )
+// //   ''');
+// //   }
 
-  Future<Note> readNote(int id) async {
-    final db = await instance.database;
+//   Future<Note> create(Note note) async {
+//     final db = await instance.database;
 
-    final maps = await db.query(
-      tableNotes,
-      columns: NoteFields.values,
-      where: '${NoteFields.id} = ?',
-      whereArgs: [id],
-    );
+//     // final json = note.toJson();
+//     // final columns =
+//     //     '${NoteFields.title}, ${NoteFields.description}, ${NoteFields.time}';
+//     // final values =
+//     //     '${json[NoteFields.title]}, ${json[NoteFields.description]}, ${json[NoteFields.time]}';
+//     // final id = await db
+//     //     .rawInsert('INSERT INTO table_name ($columns) VALUES ($values)');
 
-    if (maps.isNotEmpty) {
-      return Note.fromJson(maps.first);
-    } else {
-      throw Exception('ID $id not found');
-    }
-  }
+//     final id = await db.insert(tableNotes, note.toJson());
+//     return note.copy(id: id);
+//   }
 
-  Future<List<Note>> readAllNotes() async {
-    final db = await instance.database;
+//   Future<Note> readNote(int id) async {
+//     final db = await instance.database;
 
-    //final orderBy = '${NoteFields.datetime} ASC';
-    //final result =
-    //     await db.rawQuery('SELECT * FROM $tableNotes');
+//     final maps = await db.query(
+//       tableNotes,
+//       columns: NoteFields.values,
+//       where: '${NoteFields.id} = ?',
+//       whereArgs: [id],
+//     );
 
-    final result = await db.query(tableNotes);
+//     if (maps.isNotEmpty) {
+//       return Note.fromJson(maps.first);
+//     } else {
+//       throw Exception('ID $id not found');
+//     }
+//   }
 
-    return result.map((json) => Note.fromJson(json)).toList();
-  }
+//   Future<List<Note>> readAllNotes() async {
+//     final db = await instance.database;
 
-  Future<int> update(Note note) async {
-    final db = await instance.database;
+//     //final orderBy = '${NoteFields.datetime} ASC';
+//     //final result =
+//     //     await db.rawQuery('SELECT * FROM $tableNotes');
 
-    // final json = note.toJson();
-    // final columns =
-    //     '${NoteFields.title}, ${NoteFields.description}, ${NoteFields.time}';
-    // final values =
-    //     '${json[NoteFields.title]}, ${json[NoteFields.description]},
-    //        ${json[NoteFields.time]}';
-    // int count = await db.rawUpdate(
-    // 'UPDATE INTO table_name ($columns) VALUES ($values), WHERE name = ?');
+//     final result = await db.query(tableNotes);
 
-    return db.update(
-      tableNotes,
-      note.toJson(),
-      where: '${NoteFields.id} = ?',
-      whereArgs: [note.id],
-    );
-  }
+//     return result.map((json) => Note.fromJson(json)).toList();
+//   }
 
-  Future<int> delete(int id) async {
-    final db = await instance.database;
+//   Future<int> update(Note note) async {
+//     final db = await instance.database;
 
-    // int count =
-    //     await db.rawUpdate('DELETE FROM table_name WHERE id = ?');
+//     // final json = note.toJson();
+//     // final columns =
+//     //     '${NoteFields.title}, ${NoteFields.description}, ${NoteFields.time}';
+//     // final values =
+//     //     '${json[NoteFields.title]}, ${json[NoteFields.description]},
+//     //        ${json[NoteFields.time]}';
+//     // int count = await db.rawUpdate(
+//     // 'UPDATE INTO table_name ($columns) VALUES ($values), WHERE name = ?');
 
-    return await db.delete(
-      tableNotes,
-      where: '${NoteFields.id} = ?',
-      whereArgs: [id],
-    );
-  }
+//     return db.update(
+//       tableNotes,
+//       note.toJson(),
+//       where: '${NoteFields.id} = ?',
+//       whereArgs: [note.id],
+//     );
+//   }
 
-  Future close() async {
-    final db = await instance.database;
+//   Future<int> delete(int id) async {
+//     final db = await instance.database;
 
-    db.close();
-  }
-}
+//     // int count =
+//     //     await db.rawUpdate('DELETE FROM table_name WHERE id = ?');
+
+//     return await db.delete(
+//       tableNotes,
+//       where: '${NoteFields.id} = ?',
+//       whereArgs: [id],
+//     );
+//   }
+
+//   Future close() async {
+//     final db = await instance.database;
+
+//     db.close();
+//   }
+// }

@@ -48,17 +48,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => EventProvider(),
-      child: MaterialApp(
+      child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: 'SplashScreen',
-        routes: {
-          'SplashScreen': (context) => const SplashScreen(),
-          'OnboardingPage': (context) => const OnboardingPage(),
-          'registration': (context) => const MyRegistrationPage(),
-          'phone': (context) => const MyPhone(),
-          'otp': (context) => const MyOtp(),
-          'MyBottomNav': (context) => const MyBottomNavBar(),
-        },
+        // initialRoute: 'SplashScreen',
+        // routes: {
+        //   'SplashScreen': (context) => const SplashScreen(),
+        //   'OnboardingPage': (context) => const OnboardingPage(),
+        //   'registration': (context) => const MyRegistrationPage(),
+        //   'phone': (context) => const MyPhone(),
+        //   'otp': (context) => const MyOtp(),
+        //   'MyBottomNav': (context) => const MyBottomNavBar(),
+        // },
         title: 'Welcome to Visitor Log',
         home: Scaffold(
           // appBar: AppBar(
@@ -82,7 +82,8 @@ class MyApp extends StatelessWidget {
           //     ),
           //   ],
           // ),
-          body: showHome ? const MyRegistrationPage() : const OnboardingPage(),
+          // body: showHome ? const MyRegistrationPage() : const OnboardingPage(),
+          body: MyBottomNavBar(),
         ),
       ),
     );
