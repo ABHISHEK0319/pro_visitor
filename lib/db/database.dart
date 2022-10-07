@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../Screens/Todo folder/todo_dart.dart';
+
 class DbHelper {
   static const dbName = "visitloglocal.db";
   static const dbVersion = 1;
@@ -65,5 +67,22 @@ class DbHelper {
   static Future<int> deleteData(String table, String w, List wa) async {
     Database db = await instance.getDatabase;
     return db.delete(table, where: w, whereArgs: wa);
+  }
+
+  Future<Note> readNote(int id) async {
+    final db = await DbHelper.instance.getDatabase;
+    // Database db = await DbHelper.instance.getDatabase;
+    final maps = await db.query(
+      tableNotes,
+      columns: NoteFields.values,
+      where: '${NoteFields.id} = ?',
+      whereArgs: [id],
+    );
+
+    if (maps.isNotEmpty) {
+      return Note.fromJson(maps.first);
+    } else {
+      throw Exception('ID $id not found');
+    }
   }
 }

@@ -80,16 +80,17 @@ class _NotesPageState extends State<NotesPage> {
   Widget buildNotes() => ListView.builder(
         padding: const EdgeInsets.all(2),
         itemCount: notes.length,
-        shrinkWrap: true,
-        scrollDirection: Axis.vertical,
-        physics: const BouncingScrollPhysics(),
+        // shrinkWrap: true,
+        // scrollDirection: Axis.vertical,
+        // physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) {
           final note = notes[index];
-          return InkWell(
+          return GestureDetector(
             onTap: () => setState(() {
               Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => NoteDetailPage(noteId: note.id!),
               ));
+              refreshNotes();
             }),
             child: NoteCardWidget(note: note, index: index),
           );

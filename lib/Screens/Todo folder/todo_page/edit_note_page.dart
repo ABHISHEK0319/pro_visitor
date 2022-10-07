@@ -102,9 +102,8 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
     );
 
     // await NotesDatabase.instance.update(note);
-
     int result = await DbHelper.updateData(
-        "Todo_Record", note.toJson(), "id = ?", [note.id]);
+        "Todo_Record", note.toJson(), "id = ?", [widget.noteId]);
   }
 
   Future addNote() async {
