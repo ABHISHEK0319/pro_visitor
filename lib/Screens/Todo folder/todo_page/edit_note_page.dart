@@ -114,6 +114,7 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
     //await DbHelper.updateData(
     //  "Todo_Record", note.toJson(), '${NoteFields.id} = ?', [note.id]).whenComplete(() => Navigator.of(context).pop());
     //  print(await DbHelper.queryAll("Todo_Record"));
+
     final db = await DbHelper.instance.getDatabase;
     await db.rawUpdate(
         '''UPDATE Todo_Record SET title=?, datetime=?, description = ? WHERE id =?''',
@@ -128,7 +129,6 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
     );
     // final db = await DbHelper.instance.getDatabase;
     await DbHelper.insertData("Todo_Record", note.toJson());
-
     // await NotesDatabase.instance.create(note);
   }
 }

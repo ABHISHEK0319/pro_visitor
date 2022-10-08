@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../CustomUi/utils.dart';
+import '../../db/database.dart';
 import '../../models/event_model.dart';
 import 'event_provider.dart';
 
@@ -32,7 +33,7 @@ class _EventEditingActivityState extends State<EventEditingActivity> {
     } else {
       final event = widget.event!;
 
-      titleController.text = event.title;
+      titleController.text = event.calTitle;
       fromDate = event.from;
       toDate = event.to;
     }
@@ -70,16 +71,23 @@ class _EventEditingActivityState extends State<EventEditingActivity> {
   }
 
   List<Widget> buildEditingActions() => [
-        ElevatedButton.icon(
-          style: ElevatedButton.styleFrom(
-            primary: Colors.blueAccent,
-            // shadowColor: Colors.blueAccent,
-          ),
-          onPressed: saveForm,
-          icon: const Icon(Icons.done, color: Colors.white),
-          label: const Text(
-            'SAVE',
-            style: TextStyle(color: Colors.white),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          child: ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+              // shadowColor: Colors.blueAccent,
+            ),
+            onPressed: saveForm,
+            icon: const Icon(Icons.done, color: Colors.black),
+            label: const Text(
+              'SAVE',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 22,
+              ),
+            ),
           ),
         )
       ];
@@ -240,16 +248,16 @@ class _EventEditingActivityState extends State<EventEditingActivity> {
 
     if (isValid) {
       final event = Event(
-        title: titleController.text,
-        description: 'Description',
+        calTitle: titleController.text,
+        calDescription: 'Description',
         from: fromDate,
         to: toDate,
         isAllDay: false,
       );
-
       //final isEditing = widget.event != null;
       final provider = Provider.of<EventProvider>(context, listen: false);
       provider.addEvent(event);
+      await DbHelper.insertData("Calendar_Record", event.toJson());
 
       // if (isEditing) {
       //   provider.editEvent(event, widget.event!);
@@ -259,6 +267,7 @@ class _EventEditingActivityState extends State<EventEditingActivity> {
       //   provider.addEvent(event);
       // }
 
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
     }
   }

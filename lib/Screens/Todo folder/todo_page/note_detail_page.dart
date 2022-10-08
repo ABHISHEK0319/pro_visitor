@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
 import '../../../db/database.dart';
 import '../todo_dart.dart';
 import 'edit_note_page.dart';
@@ -33,11 +32,9 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
 
     note = await DbHelper.instance.readNote(widget.noteId);
 
-
     // final db = await DbHelper.instance.getDatabase;
     // note = await db.rawQuery('''UPDATE Todo_Record SET title=?, datetime=?, description = ? WHERE id =?''',
     // [note.title, note.datetime, note.description, note.id]);
-
 
     // column:
     // NoteFields.values;
@@ -107,8 +104,8 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
   Widget deleteButton() => IconButton(
         icon: const Icon(Icons.delete),
         onPressed: () async {
-          await DbHelper.deleteData(
-              "Todo_Record", "id = ?", [note.id]).whenComplete(() => Navigator.of(context).pop());
+          await DbHelper.deleteData("Todo_Record", "id = ?", [note.id])
+              .whenComplete(() => Navigator.of(context).pop());
           // await NotesDatabase.instance.delete(widget.noteId);
         },
       );

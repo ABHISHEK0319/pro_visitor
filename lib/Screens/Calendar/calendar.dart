@@ -3,6 +3,7 @@ import 'package:pro_visitor/Screens/Calendar/event_editing_page.dart';
 import 'package:pro_visitor/Screens/Calendar/event_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
 
 import '../../models/event_data_source.dart';
 import 'tasks_widget_calendar.dart';

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pro_visitor/db/database.dart';
 import '../todo_dart.dart';
-import '../todo_dbhelper.dart';
 import '../todo_widget/note_card_widget.dart';
 import 'edit_note_page.dart';
 import 'note_detail_page.dart';

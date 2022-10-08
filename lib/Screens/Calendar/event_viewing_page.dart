@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:pro_visitor/Screens/Calendar/event_provider.dart';
+import 'package:provider/provider.dart';
 // import 'package:pro_visitor/CustomUi/utils.dart';
 // import 'package:pro_visitor/Screens/Calendra/event_editing_page.dart';
 // import 'package:pro_visitor/Screens/Calendra/event_provider.dart';
 // import 'package:provider/provider.dart';
 
+import '../../db/database.dart';
 import '../../models/event_model.dart';
 
 class EventViewingPage extends StatelessWidget {
@@ -18,6 +21,7 @@ class EventViewingPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const CloseButton(),
+        actions: [deleteButton(context)],
         // actions: buildViewingActions(context, event),
       ),
       body: ListView(
@@ -28,7 +32,7 @@ class EventViewingPage extends StatelessWidget {
             height: 32,
           ),
           Text(
-            event.title,
+            event.calTitle,
             style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -36,7 +40,7 @@ class EventViewingPage extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Text(
-            event.description,
+            event.calDescription,
             style: const TextStyle(color: Colors.white, fontSize: 18),
           ),
         ],
@@ -58,7 +62,7 @@ class EventViewingPage extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            event.title,
+            event.calTitle,
           ),
           Text(
             event.from.toIso8601String(),
@@ -80,9 +84,20 @@ class EventViewingPage extends StatelessWidget {
   //     icon: const Icon(Icons.delete),
   //     onPressed: () {
   //       final provider = Provider.of<EventProvider>(context, listen: false);
-
   //       provider.deleteEvent(event);
   //     },
   //   );
   // }
+
+  Widget deleteButton(context) => IconButton(
+        icon: const Icon(Icons.delete),
+        onPressed: () async {
+          final provider = Provider.of<EventProvider>(context, listen: false);
+
+          provider.deleteEvent(event);
+          await DbHelper.deleteData("Todo_Record", "id = ?", [event.calId])
+              .whenComplete(() => Navigator.of(context).pop());
+          // await NotesDatabase.instance.delete(widget.noteId);
+        },
+      );
 }
