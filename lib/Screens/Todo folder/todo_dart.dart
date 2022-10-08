@@ -51,4 +51,8 @@ class Note {
         NoteFields.datetime: datetime,
         NoteFields.description: description,
       };
+
+      // Map<String, dynamic> toMap(){
+      //   return {'id':id, 'title':title, 'datetime':datetime, 'description':description};
+      // }
 }

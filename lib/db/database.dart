@@ -61,7 +61,12 @@ class DbHelper {
   static Future<int> updateData(
       String table, Map<String, dynamic> row, String w, List wa) async {
     Database db = await instance.getDatabase;
-    return db.update(table, row, where: w, whereArgs: [wa]);
+    return db.update(
+      table,
+      row,
+      where: w,
+      whereArgs: [wa],
+    );
   }
 
   static Future<int> deleteData(String table, String w, List wa) async {

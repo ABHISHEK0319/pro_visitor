@@ -86,12 +86,12 @@ class _NotesPageState extends State<NotesPage> {
         itemBuilder: (context, index) {
           final note = notes[index];
           return GestureDetector(
-            onTap: () => setState(() {
-              Navigator.of(context).push(MaterialPageRoute(
+            onTap: () async {
+              await Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => NoteDetailPage(noteId: note.id!),
               ));
               refreshNotes();
-            }),
+            },
             child: NoteCardWidget(note: note, index: index),
           );
         },

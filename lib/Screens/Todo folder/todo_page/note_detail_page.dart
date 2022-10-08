@@ -32,6 +32,13 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
     setState(() => isLoading = true);
 
     note = await DbHelper.instance.readNote(widget.noteId);
+
+
+    // final db = await DbHelper.instance.getDatabase;
+    // note = await db.rawQuery('''UPDATE Todo_Record SET title=?, datetime=?, description = ? WHERE id =?''',
+    // [note.title, note.datetime, note.description, note.id]);
+
+
     // column:
     // NoteFields.values;
     // note = (await DbHelper.querySearch(
@@ -91,19 +98,17 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
       icon: const Icon(Icons.edit_outlined),
       onPressed: () async {
         if (isLoading) return;
-
-        refreshNote();
         await Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => AddEditNotePage(note: note),
         ));
+        refreshNote();
       });
 
   Widget deleteButton() => IconButton(
         icon: const Icon(Icons.delete),
         onPressed: () async {
-          Navigator.of(context).pop();
-          int result = await DbHelper.deleteData(
-              "Todo_Record", "${NoteFields.id} = ?", [widget.noteId]);
+          await DbHelper.deleteData(
+              "Todo_Record", "id = ?", [note.id]).whenComplete(() => Navigator.of(context).pop());
           // await NotesDatabase.instance.delete(widget.noteId);
         },
       );
