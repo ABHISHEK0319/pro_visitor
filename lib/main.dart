@@ -9,6 +9,7 @@ import 'package:pro_visitor/pages/splashscreen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'Screens/Calendar/event_editing_page.dart';
 import 'Screens/Calendar/event_provider.dart';
 // import 'config/config.dart';
 

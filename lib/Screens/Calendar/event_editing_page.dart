@@ -19,6 +19,7 @@ class EventEditingActivity extends StatefulWidget {
 class _EventEditingActivityState extends State<EventEditingActivity> {
   late DateTime fromDate;
   late DateTime toDate;
+  bool isLoading = false;
 
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
@@ -36,7 +37,19 @@ class _EventEditingActivityState extends State<EventEditingActivity> {
       titleController.text = event.calTitle;
       fromDate = event.from;
       toDate = event.to;
+
+      refreshNotes();
     }
+  }
+
+  Future refreshNotes() async {
+    setState(() => isLoading = true);
+
+    // notes = await NotesDatabase.instance.readAllNotes();
+    (await DbHelper.queryAll("Calendar_Record"))
+        .map((json) => Event.fromJson(json));
+
+    setState(() => isLoading = false);
   }
 
   @override
@@ -48,49 +61,88 @@ class _EventEditingActivityState extends State<EventEditingActivity> {
 
   @override
   Widget build(BuildContext context) {
+    // final Size s = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        leading: const CloseButton(),
-        actions: buildEditingActions(),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(12),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              buildTitle(),
-              const SizedBox(height: 12),
-              buildDateTimePickers(),
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        // appBar: AppBar(
+        //   leading: const CloseButton(),
+        //   actions: buildEditingActions(),
+        // ),
+
+        children: [
+          Row(
+            children: [
+              const CloseButton(),
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.only(
+                    right: 12, top: 2, bottom: 2, left: 0),
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    // shadowColor: Colors.blueAccent,
+                  ),
+                  onPressed: saveForm,
+                  icon: const Icon(Icons.done, color: Colors.black),
+                  label: const Text(
+                    'SAVE',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontStyle: FontStyle.italic,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      buildTitle(),
+                      const SizedBox(height: 12),
+                      buildDateTimePickers(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  List<Widget> buildEditingActions() => [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          child: ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              // shadowColor: Colors.blueAccent,
-            ),
-            onPressed: saveForm,
-            icon: const Icon(Icons.done, color: Colors.black),
-            label: const Text(
-              'SAVE',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 22,
-              ),
-            ),
-          ),
-        )
-      ];
+  // List<Widget> buildEditingActions() => <Widget>[
+  //       Padding(
+  //         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+  //         child: ElevatedButton.icon(
+  //           style: ElevatedButton.styleFrom(
+  //             backgroundColor: Colors.white,
+  //             // shadowColor: Colors.blueAccent,
+  //           ),
+  //           onPressed: saveForm,
+  //           icon: const Icon(Icons.done, color: Colors.black),
+  //           label: const Text(
+  //             'SAVE',
+  //             style: TextStyle(
+  //               color: Colors.black,
+  //               fontWeight: FontWeight.bold,
+  //               fontSize: 22,
+  //             ),
+  //           ),
+  //         ),
+  //       )
+  //     ];
 
   Widget buildTitle() => TextFormField(
         style: const TextStyle(fontSize: 24),
@@ -249,7 +301,7 @@ class _EventEditingActivityState extends State<EventEditingActivity> {
     if (isValid) {
       final event = Event(
         calTitle: titleController.text,
-        calDescription: 'Description',
+        //calDescription: 'Description',
         from: fromDate,
         to: toDate,
         isAllDay: false,
@@ -257,7 +309,16 @@ class _EventEditingActivityState extends State<EventEditingActivity> {
       //final isEditing = widget.event != null;
       final provider = Provider.of<EventProvider>(context, listen: false);
       provider.addEvent(event);
-      await DbHelper.insertData("Calendar_Record", event.toJson());
+      //await DbHelper.insertData("Calendar_Record", event.toJson());
+      final db = await DbHelper.instance.getDatabase;
+      await db.rawInsert(
+          "INSERT INTO Calendar_Record ('CalTitle', 'From', 'To', 'isAllDay')  VALUES (?,?,?,?)",
+          [
+            event.calTitle,
+            event.from.toString(),
+            event.to.toString(),
+            event.isAllDay
+          ]);
 
       // if (isEditing) {
       //   provider.editEvent(event, widget.event!);
@@ -267,7 +328,6 @@ class _EventEditingActivityState extends State<EventEditingActivity> {
       //   provider.addEvent(event);
       // }
 
-      // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
     }
   }

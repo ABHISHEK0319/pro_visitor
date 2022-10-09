@@ -43,7 +43,7 @@ class _TasksWidgetCalendarState extends State<TasksWidgetCalendar> {
         initialDisplayDate: provider.selectedDate,
         cellBorderColor: Colors.transparent,
         appointmentBuilder: appointmentBuilder,
-        headerHeight: 0,
+        // headerHeight: 0,
         todayHighlightColor: Colors.black,
         //selectionDecoration: const BoxDecoration(color: Colors.transparent),
         onTap: (details) {
@@ -74,7 +74,7 @@ class _TasksWidgetCalendarState extends State<TasksWidgetCalendar> {
       ),
       child: Center(
         child: Text(
-          event.title,
+          event.calTitle.toString(),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: const TextStyle(

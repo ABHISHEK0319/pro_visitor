@@ -5,30 +5,31 @@ const String tableCalendar = 'Calendar_Record';
 class CalendarFields {
   static final List<String> values = [
     /// Add all fields
-    calId, calTitle, calDescription, from, to, isAllDay,
+    calId, calTitle, from, to, isAllDay,
+    // calDesId,
   ];
 
   static const String calId = 'CalId';
   static const String calTitle = 'CalTitle';
   static const String from = 'Form';
   static const String to = 'To';
-  static const String calDescription = "CalDescription";
+  //static const String calDesId = "calDesId";
   static const String isAllDay = "isAllDay";
 }
 
 class Event {
   final int? calId;
   final String calTitle;
-  final String calDescription;
+  // final int calDesId;
   final DateTime from;
   final DateTime to;
-  final Color backgroundColor;
+  Color? backgroundColor;
   final bool isAllDay;
 
-  const Event({
+  Event({
     this.calId,
     required this.calTitle,
-    required this.calDescription,
+    // required this.calDesId,
     required this.from,
     required this.to,
     this.backgroundColor = Colors.redAccent,
@@ -40,7 +41,7 @@ class Event {
     String? calTitle,
     DateTime? from,
     DateTime? to,
-    String? calDescription,
+    // int? calDesId,
     bool? isAllDay,
   }) =>
       Event(
@@ -48,7 +49,7 @@ class Event {
           calTitle: calTitle ?? this.calTitle,
           from: from ?? this.from,
           to: to ?? this.to,
-          calDescription: calDescription ?? this.calDescription,
+          // calDesId: calDesId ?? this.calDesId,
           isAllDay: isAllDay ?? this.isAllDay);
 
   static Event fromJson(Map<String, Object?> json) => Event(
@@ -56,16 +57,16 @@ class Event {
         calTitle: json[CalendarFields.calTitle] as String,
         from: json[CalendarFields.from] as DateTime,
         to: json[CalendarFields.to] as DateTime,
-        calDescription: json[CalendarFields.calDescription] as String,
+        // calDesId: json[CalendarFields.calDesId] as int,
         isAllDay: json[CalendarFields.isAllDay] as bool,
       );
 
   Map<String, Object?> toJson() => {
         CalendarFields.calId: calId,
         CalendarFields.calTitle: calTitle,
-        CalendarFields.from: from,
-        CalendarFields.to: to,
-        CalendarFields.calDescription: calDescription,
-        CalendarFields.isAllDay: isAllDay,
+        CalendarFields.from: from.toIso8601String(),
+        CalendarFields.to: to.toIso8601String(),
+        // CalendarFields.calDesId: calDesId,
+        CalendarFields.isAllDay: isAllDay.toString(),
       };
 }

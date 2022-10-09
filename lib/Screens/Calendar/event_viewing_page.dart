@@ -38,11 +38,11 @@ class EventViewingPage extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 24),
-          Text(
-            event.calDescription,
-            style: const TextStyle(color: Colors.white, fontSize: 18),
-          ),
+          // const SizedBox(height: 24),
+          // Text(
+          //   event.calDescription,
+          //   style: const TextStyle(color: Colors.white, fontSize: 18),
+          // ),
         ],
       ),
     );

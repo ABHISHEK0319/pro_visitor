@@ -18,8 +18,8 @@ class EventDataSource extends CalendarDataSource {
   @override
   String getSubject(int index) => getEvent(index).calTitle;
 
-  @override
-  Color getColor(int index) => getEvent(index).backgroundColor;
+  // @override
+  // Color getColor(int index) => getEvent(index).backgroundColor;
 
   @override
   bool isAllDay(int index) => getEvent(index).isAllDay;

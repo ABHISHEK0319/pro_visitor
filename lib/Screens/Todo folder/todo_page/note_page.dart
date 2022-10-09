@@ -19,7 +19,6 @@ class _NotesPageState extends State<NotesPage> {
   @override
   void initState() {
     super.initState();
-
     refreshNotes();
   }
 
@@ -34,7 +33,7 @@ class _NotesPageState extends State<NotesPage> {
     setState(() => isLoading = true);
 
     // notes = await NotesDatabase.instance.readAllNotes();
-    notes = (await DbHelper.queryAll("Todo_Record"))
+    notes = (await DbHelper.queryAll("Calendar_Record"))
         .map((json) => Note.fromJson(json))
         .toList();
 
