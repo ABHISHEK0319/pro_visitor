@@ -1,47 +1,38 @@
 import 'package:flutter/material.dart';
-import '../../../db/database.dart';
-import '../todo_dart.dart';
-import 'edit_note_page.dart';
+import 'package:pro_visitor/Screens/Appoint_Folder/Appoint_Folder/appoint_models/appoint_data.dart';
+import 'package:pro_visitor/Screens/Appoint_Folder/Appoint_Folder/appoint_page/appoint_add_edit_page.dart';
+import 'package:pro_visitor/db/database.dart';
 
-// ignore: must_be_immutable
-class NoteDetailPage extends StatefulWidget {
-  final int noteId;
+class AppointDetailPage extends StatefulWidget {
+  final int appointId;
 
-  const NoteDetailPage({
+  const AppointDetailPage({
     Key? key,
-    required this.noteId,
+    required this.appointId,
   }) : super(key: key);
 
   @override
-  State<NoteDetailPage> createState() => _NoteDetailPageState();
+  AppointDetailPageState createState() => AppointDetailPageState();
 }
 
-class _NoteDetailPageState extends State<NoteDetailPage> {
-  late Note note;
+class AppointDetailPageState extends State<AppointDetailPage> {
+  late Appoint_Data appoint_data;
   bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
 
-    refreshNote();
+    refreshAppoint();
   }
 
-  Future refreshNote() async {
+  Future refreshAppoint() async {
     setState(() => isLoading = true);
 
-    note = await DbHelper.instance.readNote(widget.noteId);
+    appoint_data = await DbHelper.instance.readAppoints(widget.appointId);
 
-    // final db = await DbHelper.instance.getDatabase;
-    // note = await db.rawQuery('''UPDATE Todo_Record SET title=?, datetime=?, description = ? WHERE id =?''',
-    // [note.title, note.datetime, note.description, note.id]);
-
-    // column:
-    // NoteFields.values;
-    // note = (await DbHelper.querySearch(
-    //         "Todo_Record", "${NoteFields.id}=?", [widget.noteId]))
-    //     .map((json) => Note.fromJson(json))
-    //     .toList();
+    //this.appoint_data =
+    //    await AppointDatabase.instance.readAppoints(widget.appointId);
 
     setState(() => isLoading = false);
   }
@@ -49,7 +40,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text('View Note'),
+          title: const Text('View Appointment'),
           titleTextStyle: const TextStyle(
             fontSize: 24.0,
             fontWeight: FontWeight.bold,
@@ -64,7 +55,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   children: [
                     Text(
-                      note.title,
+                      appoint_data.appointname,
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 20,
@@ -73,7 +64,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      note.datetime,
+                      appoint_data.appointdatetime,
                       //DateFormat.yMMMd().format(note.createdTime),
                       style: const TextStyle(
                         color: Colors.black87,
@@ -82,7 +73,13 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      note.description,
+                      appoint_data.appointcontact,
+                      style: const TextStyle(
+                          color: Colors.black87, fontSize: 18.0),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      appoint_data.appointreason,
                       style: const TextStyle(
                           color: Colors.black87, fontSize: 18.0),
                     )
@@ -95,18 +92,21 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
       icon: const Icon(Icons.edit_outlined),
       onPressed: () async {
         if (isLoading) return;
+
         await Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => AddEditNotePage(note: note),
+          builder: (context) => AppointAddEditPage(appoint: appoint_data),
         ));
-        refreshNote();
+
+        refreshAppoint();
       });
 
   Widget deleteButton() => IconButton(
         icon: const Icon(Icons.delete),
         onPressed: () async {
-          await DbHelper.deleteData("Todo_Record", "id = ?", [note.id])
-              .whenComplete(() => Navigator.of(context).pop());
-          // await NotesDatabase.instance.delete(widget.noteId);
+          await DbHelper.deleteData("Appointments_Record", "appointid = ?", [
+            appoint_data.appointid
+          ]).whenComplete(() => Navigator.of(context).pop());
+          //await AppointDatabase.instance.delete(widget.appointId);
         },
       );
 }

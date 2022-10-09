@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../todo_dart.dart';
+import '../todo_models/todo_dart.dart';
 
 final _lightColors = [
   Colors.amber.shade300,
@@ -35,16 +35,15 @@ class NoteCardWidget extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.description_outlined),
               title: Text(
-                note.title,
+                note.todotitle,
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              //SizedBox(height: 4),
               subtitle: Text(
-                note.datetime,
+                note.tododatetime,
                 style: const TextStyle(
                   color: Colors.black87,
                   fontSize: 18,

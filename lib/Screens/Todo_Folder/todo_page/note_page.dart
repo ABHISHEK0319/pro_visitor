@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pro_visitor/db/database.dart';
-import '../todo_dart.dart';
+import '../todo_models/todo_dart.dart';
 import '../todo_widget/note_card_widget.dart';
 import 'edit_note_page.dart';
 import 'note_detail_page.dart';
@@ -19,6 +19,7 @@ class _NotesPageState extends State<NotesPage> {
   @override
   void initState() {
     super.initState();
+
     refreshNotes();
   }
 
@@ -33,7 +34,7 @@ class _NotesPageState extends State<NotesPage> {
     setState(() => isLoading = true);
 
     // notes = await NotesDatabase.instance.readAllNotes();
-    notes = (await DbHelper.queryAll("Calendar_Record"))
+    notes = (await DbHelper.queryAll("Todo_Record"))
         .map((json) => Note.fromJson(json))
         .toList();
 
@@ -42,16 +43,6 @@ class _NotesPageState extends State<NotesPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        // appBar: AppBar(
-        //   title: const Text(
-        //     'Welcome To Visitor Log',
-        //     style: TextStyle(
-        //       fontSize: 24,
-        //       fontWeight: FontWeight.bold,
-        //     ),
-        //   ),
-        //   //actions: [Icon(Icons.search), SizedBox(width: 12)],
-        // ),
         body: Center(
           child: isLoading
               ? const CircularProgressIndicator()
@@ -78,15 +69,13 @@ class _NotesPageState extends State<NotesPage> {
   Widget buildNotes() => ListView.builder(
         padding: const EdgeInsets.all(2),
         itemCount: notes.length,
-        // shrinkWrap: true,
-        // scrollDirection: Axis.vertical,
-        // physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) {
           final note = notes[index];
+          
           return GestureDetector(
             onTap: () async {
               await Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => NoteDetailPage(noteId: note.id!),
+                builder: (context) => NoteDetailPage(noteId: note.todoid!),
               ));
               refreshNotes();
             },

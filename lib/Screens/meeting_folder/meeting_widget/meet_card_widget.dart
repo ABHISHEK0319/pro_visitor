@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pro_visitor/Screens/meeting_folder/meeting_page/model_meeting.dart';
+import 'package:pro_visitor/Screens/meeting_folder/meeting_models/meet_model_dart.dart';
 
 final _lightColors = [
   Colors.amber.shade300,
@@ -17,7 +17,7 @@ class MeetCardWidget extends StatelessWidget {
     required this.index,
   }) : super(key: key);
 
-  final ModelMeeting meeting;
+  final Meeting meeting;
   final int index;
 
   @override
@@ -34,50 +34,44 @@ class MeetCardWidget extends StatelessWidget {
           children: <Widget>[
             ListTile(
               leading: const Icon(Icons.description_outlined),
-              title: Row(
-                children: [
-                  Text(
-                    meeting.meetHeader,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: Text(
-                      meeting.createdBy,
+              title: Text(
+                meeting.meetTitle,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Expanded(
+                child: Row(
+                  children: [
+                    Text(
+                      meeting.meetDate,
                       style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 10.0,
-                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                        fontSize: 18,
                       ),
-                      textAlign: TextAlign.right,
                     ),
-                  ),
-                ],
+                    // Text(
+                    //   meeting.meetTime,
+                    //   style: const TextStyle(
+                    //     color: Colors.black87,
+                    //     fontSize: 18,
+                    //   ),
+                    // ),
+                  ],
+                ),
               ),
-              //SizedBox(height: 4),
-              subtitle: Row(
-                children: [
-                  Text(
-                    meeting.meetDate,
-                    style: const TextStyle(
-                      color: Colors.black87,
-                      fontSize: 18,
-                    ),
-                  ),
-                  Text(
-                    meeting.meetTime,
-                    style: const TextStyle(
-                      color: Colors.black87,
-                      fontSize: 18,
-                    ),
-                  ),
-                ],
-              ),
-            )
+              // trailing: Text(
+              //   meeting.createdBy,
+              //   style: const TextStyle(
+              //     color: Colors.black,
+              //     fontSize: 18.0,
+              //     fontWeight: FontWeight.bold,
+              //   ),
+              //   textAlign: TextAlign.right,
+              // ),
+            ),
           ],
         ),
       ),

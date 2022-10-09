@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pro_visitor/Screens/Appoint_Folder/appoint_models/appoint_data.dart';
-import 'package:pro_visitor/Screens/Appoint_Folder/appoint_widget/appoint_form_widget.dart';
-
-import '../../../db/database.dart';
+import 'package:pro_visitor/db/database.dart';
+import '../appoint_models/appoint_data.dart';
+import '../appoint_widget/appoint_form_widget.dart';
 
 class AppointAddEditPage extends StatefulWidget {
   final Appoint_Data? appoint;
@@ -50,21 +49,19 @@ class _AppointAddEditPageState extends State<AppointAddEditPage> {
             datetime: appointdatetime,
             contact: appointcontact,
             reason: appointreason,
-            onChangedName: (name) => 
-                setState(() => this.appointname = name),
+            onChangedName: (name) => setState(() => this.appointname = name),
             onChangedDatetime: (datetime) =>
                 setState(() => this.appointdatetime = datetime),
             onChangedContact: (contact) =>
                 setState(() => this.appointcontact = contact),
-            onChangedReason: (reason) => 
+            onChangedReason: (reason) =>
                 setState(() => this.appointreason = reason),
           ),
         ),
       );
 
   Widget buildButton() {
-    final isFormValid = 
-        appointname.isNotEmpty &&
+    final isFormValid = appointname.isNotEmpty &&
         appointdatetime.isNotEmpty &&
         appointcontact.isNotEmpty &&
         appointreason.isNotEmpty;
@@ -116,8 +113,15 @@ class _AppointAddEditPageState extends State<AppointAddEditPage> {
     //await AppointDatabase.instance.update(update_appoint);
 
     final db = await DbHelper.instance.getDatabase;
-    await db.rawUpdate('''UPDATE Appointments_Record SET appointname=?, appointdatetime=?, appointcontact=?, appointreason = ? WHERE appointid =?''',
-    [update_appoint.appointname, update_appoint.appointdatetime, update_appoint.appointcontact, update_appoint.appointreason, update_appoint.appointid]);
+    await db.rawUpdate(
+        '''UPDATE Appointments_Record SET appointname=?, appointdatetime=?, appointcontact=?, appointreason = ? WHERE appointid =?''',
+        [
+          update_appoint.appointname,
+          update_appoint.appointdatetime,
+          update_appoint.appointcontact,
+          update_appoint.appointreason,
+          update_appoint.appointid
+        ]);
   }
 
   Future addAppoint() async {

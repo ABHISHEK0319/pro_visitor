@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pro_visitor/Screens/meeting_folder/meeting_page/model_meeting.dart';
+import 'package:pro_visitor/Screens/meeting_folder/meeting_models/meet_model_dart.dart';
 import 'package:pro_visitor/db/database.dart';
 import 'edit_meet_page.dart';
 
@@ -17,7 +17,7 @@ class MeetDetailPage extends StatefulWidget {
 
 class _MeetDetailPageState extends State<MeetDetailPage> {
   late int id;
-  late ModelMeeting meeting;
+  late Meeting meeting;
   bool isLoading = false;
 
   @override
@@ -30,9 +30,11 @@ class _MeetDetailPageState extends State<MeetDetailPage> {
   Future refreshMeeting() async {
     setState(() => isLoading = true);
 
-    final db = await DbHelper.instance.getDatabase;
-    List<Map<String, dynamic>> rs =
-        await DbHelper.querySearch("Meeting_Record", "meetId =?", [id]);
+    // final db = await DbHelper.instance.getDatabase;
+
+    // List<Map<String, dynamic>> rs =
+    //     await DbHelper.querySearch("Meetings_Record", "meetId =?", [id]);
+    meeting = await DbHelper.instance.readMeeting(widget.meetId);
 
     setState(() => isLoading = false);
   }
@@ -55,7 +57,7 @@ class _MeetDetailPageState extends State<MeetDetailPage> {
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   children: [
                     Text(
-                      meeting.meetHeader,
+                      meeting.meetTitle,
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 20,
@@ -108,8 +110,9 @@ class _MeetDetailPageState extends State<MeetDetailPage> {
   Widget deleteButton() => IconButton(
         icon: const Icon(Icons.delete),
         onPressed: () async {
-          Navigator.of(context).pop();
-          await DbHelper.deleteData("Meeting_Record", "meetId =?", [id]);
+          await DbHelper.deleteData(
+              "Meetings_Record", "meetId = ?", [meeting.meetId]).whenComplete(() => Navigator.of(context).pop());
+          // await DbHelper.deleteData("Meeting_Record", "meetId =?", [id]);
         },
       );
 }

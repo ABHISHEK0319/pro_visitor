@@ -74,7 +74,7 @@ class NoteFormWidget extends StatelessWidget {
       );
 
   Widget buildDescription() => TextFormField(
-        maxLines: 5,
+        maxLines: 3,
         initialValue: description,
         style: const TextStyle(
           color: Colors.black,

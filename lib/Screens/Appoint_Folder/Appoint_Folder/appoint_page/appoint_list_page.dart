@@ -1,10 +1,10 @@
-
 import 'package:flutter/material.dart';
-import 'package:pro_visitor/Screens/Appoint_Folder/appoint_models/appoint_data.dart';
-import 'package:pro_visitor/Screens/Appoint_Folder/appoint_page/appoint_add_edit_page.dart';
-import 'package:pro_visitor/Screens/Appoint_Folder/appoint_widget/appoint_card_widget.dart';
-import 'package:pro_visitor/Screens/Appoint_Folder/appoint_page/appoint_detail_page.dart';
-import '../../../db/database.dart';
+import 'package:pro_visitor/Screens/Appoint_Folder/Appoint_Folder/appoint_page/appoint_add_edit_page.dart';
+import 'package:pro_visitor/Screens/Appoint_Folder/Appoint_Folder/appoint_page/appoint_detail_page.dart';
+import 'package:pro_visitor/db/database.dart';
+
+import '../appoint_models/appoint_data.dart';
+import '../appoint_widget/appoint_card_widget.dart';
 
 class AppointListPage extends StatefulWidget {
   const AppointListPage({Key? key}) : super(key: key);
@@ -63,7 +63,8 @@ class AppointListPageState extends State<AppointListPage> {
           child: const Icon(Icons.add),
           onPressed: () async {
             await Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const AppointAddEditPage()),
+              MaterialPageRoute(
+                  builder: (context) => const AppointAddEditPage()),
             );
             refreshAppoints();
           },
@@ -78,7 +79,8 @@ class AppointListPageState extends State<AppointListPage> {
           return GestureDetector(
             onTap: () async {
               await Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => AppointDetailPage(appointId: appoint.appointid!),
+                builder: (context) =>
+                    AppointDetailPage(appointId: appoint.appointid!),
               ));
               refreshAppoints();
             },

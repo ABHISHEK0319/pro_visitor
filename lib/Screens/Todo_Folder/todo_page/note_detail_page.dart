@@ -1,39 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:pro_visitor/Screens/Appoint_Folder/appoint_models/appoint_data.dart';
-import 'package:pro_visitor/Screens/Appoint_Folder/appoint_page/appoint_add_edit_page.dart';
-
+import 'package:sqflite/sqflite.dart';
 import '../../../db/database.dart';
+import '../todo_models/todo_dart.dart';
+import 'edit_note_page.dart';
 
-class AppointDetailPage extends StatefulWidget {
-  final int appointId;
+class NoteDetailPage extends StatefulWidget {
+  final int noteId;
 
-  const AppointDetailPage({
+  const NoteDetailPage({
     Key? key,
-    required this.appointId,
+    required this.noteId,
   }) : super(key: key);
 
   @override
-  AppointDetailPageState createState() => AppointDetailPageState();
+  State<NoteDetailPage> createState() => _NoteDetailPageState();
 }
 
-class AppointDetailPageState extends State<AppointDetailPage> {
-  late Appoint_Data appoint_data;
+class _NoteDetailPageState extends State<NoteDetailPage> {
+  late Note note;
   bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
 
-    refreshAppoint();
+    refreshNote();
   }
 
-  Future refreshAppoint() async {
+  Future refreshNote() async {
     setState(() => isLoading = true);
 
-    appoint_data = await DbHelper.instance.readAppoints(widget.appointId);
-
-    //this.appoint_data =
-    //    await AppointDatabase.instance.readAppoints(widget.appointId);
+    note = await DbHelper.instance.readNote(widget.noteId);
 
     setState(() => isLoading = false);
   }
@@ -41,7 +38,7 @@ class AppointDetailPageState extends State<AppointDetailPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text('View Appointment'),
+          title: const Text('View Note'),
           titleTextStyle: const TextStyle(
             fontSize: 24.0,
             fontWeight: FontWeight.bold,
@@ -56,7 +53,7 @@ class AppointDetailPageState extends State<AppointDetailPage> {
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   children: [
                     Text(
-                      appoint_data.appointname,
+                      note.todotitle,
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 20,
@@ -65,8 +62,7 @@ class AppointDetailPageState extends State<AppointDetailPage> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      appoint_data.appointdatetime,
-                      //DateFormat.yMMMd().format(note.createdTime),
+                      note.tododatetime,
                       style: const TextStyle(
                         color: Colors.black87,
                         fontSize: 18.0,
@@ -74,13 +70,7 @@ class AppointDetailPageState extends State<AppointDetailPage> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      appoint_data.appointcontact,
-                      style: const TextStyle(
-                          color: Colors.black87, fontSize: 18.0),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      appoint_data.appointreason,
+                      note.tododescription,
                       style: const TextStyle(
                           color: Colors.black87, fontSize: 18.0),
                     )
@@ -93,20 +83,18 @@ class AppointDetailPageState extends State<AppointDetailPage> {
       icon: const Icon(Icons.edit_outlined),
       onPressed: () async {
         if (isLoading) return;
-
         await Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => AppointAddEditPage(appoint: appoint_data),
+          builder: (context) => AddEditNotePage(note: note),
         ));
-
-        refreshAppoint();
+        refreshNote();
       });
 
   Widget deleteButton() => IconButton(
         icon: const Icon(Icons.delete),
         onPressed: () async {
           await DbHelper.deleteData(
-              "Appointments_Record", "appointid = ?", [appoint_data.appointid]).whenComplete(() => Navigator.of(context).pop());
-          //await AppointDatabase.instance.delete(widget.appointId);
+              "Todo_Record", "todoid = ?", [note.todoid]).whenComplete(() => Navigator.of(context).pop());
+          // await NotesDatabase.instance.delete(widget.noteId);
         },
       );
 }

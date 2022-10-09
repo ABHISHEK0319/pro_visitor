@@ -1,6 +1,7 @@
+
 import 'package:flutter/material.dart';
 import '../../../db/database.dart';
-import '../todo_dart.dart';
+import '../todo_models/todo_dart.dart';
 import '../todo_widget/note_form_widget.dart';
 
 class AddEditNotePage extends StatefulWidget {
@@ -16,18 +17,18 @@ class AddEditNotePage extends StatefulWidget {
 
 class _AddEditNotePageState extends State<AddEditNotePage> {
   final _formKey = GlobalKey<FormState>();
-  late int id;
-  late String title;
-  late String datetime;
-  late String description;
+  late int todoid;
+  late String todotitle;
+  late String tododatetime;
+  late String tododescription;
 
   @override
   void initState() {
     super.initState();
-    id = widget.note?.id ?? 0;
-    title = widget.note?.title ?? '';
-    datetime = widget.note?.datetime ?? '';
-    description = widget.note?.description ?? '';
+    todoid = widget.note?.todoid ?? 0;
+    todotitle = widget.note?.todotitle ?? '';
+    tododatetime = widget.note?.tododatetime ?? '';
+    tododescription = widget.note?.tododescription ?? '';
   }
 
   @override
@@ -43,21 +44,22 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
         body: Form(
           key: _formKey,
           child: NoteFormWidget(
-            title: title,
-            datetime: datetime,
-            description: description,
-            onChangedTitle: (title) => setState(() => this.title = title),
+            title: todotitle,
+            datetime: tododatetime,
+            description: tododescription,
+            onChangedTitle: (title) => 
+                setState(() => this.todotitle = title),
             onChangedDatetime: (datetime) =>
-                setState(() => this.datetime = datetime),
+                setState(() => this.tododatetime = datetime),
             onChangedDescription: (description) =>
-                setState(() => this.description = description),
+                setState(() => this.tododescription = description),
           ),
         ),
       );
 
   Widget buildButton() {
     final isFormValid =
-        title.isNotEmpty && datetime.isNotEmpty && description.isNotEmpty;
+        todotitle.isNotEmpty && tododatetime.isNotEmpty && tododescription.isNotEmpty;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
@@ -67,7 +69,7 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
           shadowColor: Colors.red,
           backgroundColor: isFormValid ? Colors.white : Colors.grey,
         ),
-        onPressed: isFormValid ? addOrUpdateNote : null,
+        onPressed: isFormValid? addOrUpdateNote: null,
         child: const Text(
           'Save',
           style: TextStyle(
@@ -83,13 +85,11 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
   void addOrUpdateNote() async {
     Navigator.of(context).pop();
     final isValid = _formKey.currentState!.validate();
-
     if (isValid) {
       final isUpdating = widget.note != null;
 
       if (isUpdating) {
         await updateNote();
-        //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const NotesPage()));
       } else {
         await addNote();
       }
@@ -98,37 +98,31 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
 
   Future updateNote() async {
     final note = widget.note!.copy(
-      id: id,
-      title: title,
-      datetime: datetime,
-      description: description,
+      todoid: todoid,
+      todotitle: todotitle,
+      tododatetime: tododatetime,
+      tododescription: tododescription,
     );
-    // final note = Note(
-    //   id: id,
-    //   title: title,
-    //   datetime: datetime,
-    //   description: description,
-    // );
 
     // await NotesDatabase.instance.update(note);
+    
     //await DbHelper.updateData(
     //  "Todo_Record", note.toJson(), '${NoteFields.id} = ?', [note.id]).whenComplete(() => Navigator.of(context).pop());
     //  print(await DbHelper.queryAll("Todo_Record"));
-
     final db = await DbHelper.instance.getDatabase;
-    await db.rawUpdate(
-        '''UPDATE Todo_Record SET title=?, datetime=?, description = ? WHERE id =?''',
-        [note.title, note.datetime, note.description, note.id]);
+    await db.rawUpdate('''UPDATE Todo_Record SET todotitle=?, tododatetime=?, tododescription = ? WHERE todoid =?''',
+    [note.todotitle, note.tododatetime, note.tododescription, note.todoid]);
   }
 
   Future addNote() async {
     final note = Note(
-      title: title,
-      datetime: datetime,
-      description: description,
+      todotitle: todotitle,
+      tododatetime: tododatetime,
+      tododescription: tododescription,
     );
     // final db = await DbHelper.instance.getDatabase;
     await DbHelper.insertData("Todo_Record", note.toJson());
+
     // await NotesDatabase.instance.create(note);
   }
 }

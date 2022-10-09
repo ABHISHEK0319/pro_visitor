@@ -86,13 +86,13 @@ class MeetFormWidget extends StatelessWidget {
       );
   Widget buildTime() => TextFormField(
         maxLines: 1,
-        initialValue: date,
+        initialValue: time,
         style: const TextStyle(
           color: Colors.black,
           fontSize: 20,
         ),
         decoration: const InputDecoration(
-          icon: Icon(Icons.date_range_outlined),
+          icon: Icon(Icons.timelapse_outlined),
           border: OutlineInputBorder(),
           hintText: 'time',
           hintStyle: TextStyle(color: Colors.black38),
@@ -110,7 +110,7 @@ class MeetFormWidget extends StatelessWidget {
           fontSize: 20,
         ),
         decoration: const InputDecoration(
-          icon: Icon(Icons.description_outlined),
+          icon: Icon(Icons.call),
           border: OutlineInputBorder(),
           hintText: 'MyContact',
           hintStyle: TextStyle(color: Colors.black38),
@@ -123,13 +123,13 @@ class MeetFormWidget extends StatelessWidget {
 
   Widget buildCreatedBy() => TextFormField(
         maxLines: 1,
-        initialValue: myContact,
+        initialValue: createdBy,
         style: const TextStyle(
           color: Colors.black,
           fontSize: 20,
         ),
         decoration: const InputDecoration(
-          icon: Icon(Icons.description_outlined),
+          icon: Icon(Icons.person),
           border: OutlineInputBorder(),
           hintText: 'CreatedBy',
           hintStyle: TextStyle(color: Colors.black38),
@@ -137,6 +137,6 @@ class MeetFormWidget extends StatelessWidget {
         validator: (title) => title != null && title.isEmpty
             ? 'The createdBy cannot be empty'
             : null,
-        onChanged: onChangedMyContact,
+        onChanged: onChangedCreatedBy,
       );
 }

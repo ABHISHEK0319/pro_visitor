@@ -22,10 +22,8 @@ class AppointCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// Pick colors from the accent colors based on index
     final color = _lightColors[index % _lightColors.length];
     //final time = DateFormat.yMMMd().format(note.datetime);
-    //final minHeight = getMinHeight(index);
 
     return Card(
       color: color,
@@ -39,7 +37,7 @@ class AppointCardWidget extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.description_outlined),
               title: Text(
-                appoint.name,
+                appoint.appointname,
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 20.0,
@@ -48,14 +46,14 @@ class AppointCardWidget extends StatelessWidget {
               ),
               //SizedBox(height: 4),
               subtitle: Text(
-                appoint.datetime,
+                appoint.appointdatetime,
                 style: const TextStyle(
                   color: Colors.black87,
                   fontSize: 18,
                 ),
               ),
               trailing: Text(
-                appoint.contact,
+                appoint.appointcontact,
                 style: const TextStyle(
                   color: Colors.black87,
                   fontSize: 18,
