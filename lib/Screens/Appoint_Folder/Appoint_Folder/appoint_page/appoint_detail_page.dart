@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pro_visitor/Screens/Appoint_Folder/Appoint_Folder/appoint_models/appoint_data.dart';
 import 'package:pro_visitor/Screens/Appoint_Folder/Appoint_Folder/appoint_page/appoint_add_edit_page.dart';
 import 'package:pro_visitor/db/database.dart';
+
+import '../../appoint_models/appoint_data.dart';
 
 class AppointDetailPage extends StatefulWidget {
   final int appointId;

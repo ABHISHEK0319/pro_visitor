@@ -63,86 +63,53 @@ class _EventEditingActivityState extends State<EventEditingActivity> {
   Widget build(BuildContext context) {
     // final Size s = MediaQuery.of(context).size;
     return Scaffold(
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        // appBar: AppBar(
-        //   leading: const CloseButton(),
-        //   actions: buildEditingActions(),
-        // ),
-
-        children: [
-          Row(
-            children: [
-              const CloseButton(),
-              const Spacer(),
-              Padding(
-                padding: const EdgeInsets.only(
-                    right: 12, top: 2, bottom: 2, left: 0),
-                child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    // shadowColor: Colors.blueAccent,
-                  ),
-                  onPressed: saveForm,
-                  icon: const Icon(Icons.done, color: Colors.black),
-                  label: const Text(
-                    'SAVE',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontStyle: FontStyle.italic,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      buildTitle(),
-                      const SizedBox(height: 12),
-                      buildDateTimePickers(),
-                    ],
-                  ),
-                ),
-              ],
+      appBar: AppBar(
+        leading: const CloseButton(),
+        actions: buildEditingActions(),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  buildTitle(),
+                  const SizedBox(height: 12),
+                  buildDateTimePickers(),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  // List<Widget> buildEditingActions() => <Widget>[
-  //       Padding(
-  //         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-  //         child: ElevatedButton.icon(
-  //           style: ElevatedButton.styleFrom(
-  //             backgroundColor: Colors.white,
-  //             // shadowColor: Colors.blueAccent,
-  //           ),
-  //           onPressed: saveForm,
-  //           icon: const Icon(Icons.done, color: Colors.black),
-  //           label: const Text(
-  //             'SAVE',
-  //             style: TextStyle(
-  //               color: Colors.black,
-  //               fontWeight: FontWeight.bold,
-  //               fontSize: 22,
-  //             ),
-  //           ),
-  //         ),
-  //       )
-  //     ];
+  List<Widget> buildEditingActions() => <Widget>[
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          child: ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+              // shadowColor: Colors.blueAccent,
+            ),
+            onPressed: saveForm,
+            icon: const Icon(Icons.done, color: Colors.black),
+            label: const Text(
+              'SAVE',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 22,
+              ),
+            ),
+          ),
+        )
+      ];
 
   Widget buildTitle() => TextFormField(
         style: const TextStyle(fontSize: 24),
@@ -318,7 +285,7 @@ class _EventEditingActivityState extends State<EventEditingActivity> {
             event.from.toString(),
             event.to.toString(),
             event.isAllDay
-          ]);
+          ]).whenComplete(() => Navigator.of(context).pop());
 
       // if (isEditing) {
       //   provider.editEvent(event, widget.event!);
@@ -328,7 +295,6 @@ class _EventEditingActivityState extends State<EventEditingActivity> {
       //   provider.addEvent(event);
       // }
 
-      Navigator.of(context).pop();
     }
   }
 }

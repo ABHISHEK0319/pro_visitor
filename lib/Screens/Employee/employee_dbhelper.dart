@@ -1,6 +1,6 @@
 import 'package:path/path.dart';
 import 'package:pro_visitor/Screens/Employee/employee_dart.dart';
-import 'package:pro_visitor/Screens/Todo%20folder/todo_dart.dart';
+import 'package:pro_visitor/Screens/Todo_Folder/todo_models/todo_dart.dart';
 import 'package:sqflite/sqflite.dart';
 
 class NotesDatabase {
@@ -30,10 +30,10 @@ class NotesDatabase {
 
     await db.execute('''
 CREATE TABLE $tableNotes ( 
-  ${NoteFields.id} $idType, 
-  ${NoteFields.title} $textType,
-  ${NoteFields.datetime} $textType,
-  ${NoteFields.description} $textType
+  ${EmployeeFields.empid} $idType, 
+  ${EmployeeFields.empname} $textType,
+  ${EmployeeFields.empcontact} $textType,
+  ${EmployeeFields.empdesignation} $textType
   )
   ''');
   }
@@ -110,7 +110,7 @@ CREATE TABLE $tableNotes (
 
     return await db.delete(
       tableNotes,
-      where: '${NoteFields.id} = ?',
+      where: '${EmployeeFields.empid} = ?',
       whereArgs: [id],
     );
   }

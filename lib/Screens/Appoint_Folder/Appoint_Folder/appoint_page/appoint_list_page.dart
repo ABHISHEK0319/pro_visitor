@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pro_visitor/Screens/Appoint_Folder/Appoint_Folder/appoint_page/appoint_add_edit_page.dart';
 import 'package:pro_visitor/Screens/Appoint_Folder/Appoint_Folder/appoint_page/appoint_detail_page.dart';
 import 'package:pro_visitor/db/database.dart';
-
-import '../appoint_models/appoint_data.dart';
-import '../appoint_widget/appoint_card_widget.dart';
+import '../../appoint_models/appoint_data.dart';
+import '../../appoint_widget/appoint_card_widget.dart';
 
 class AppointListPage extends StatefulWidget {
   const AppointListPage({Key? key}) : super(key: key);

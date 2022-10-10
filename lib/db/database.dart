@@ -3,8 +3,9 @@ import 'package:flutter/services.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-
-import '../Screens/Todo folder/todo_dart.dart';
+import '../Screens/Appoint_Folder/appoint_models/appoint_data.dart';
+import '../Screens/Todo_Folder/todo_models/todo_dart.dart';
+import '../Screens/meeting_folder/meeting_models/meet_model_dart.dart';
 
 class DbHelper {
   static const dbName = "visitloglocal.db";
@@ -80,12 +81,46 @@ class DbHelper {
     final maps = await db.query(
       tableNotes,
       columns: NoteFields.values,
-      where: '${NoteFields.id} = ?',
+      where: '${NoteFields.todoid} = ?',
       whereArgs: [id],
     );
 
     if (maps.isNotEmpty) {
       return Note.fromJson(maps.first);
+    } else {
+      throw Exception('ID $id not found');
+    }
+  }
+
+  Future<Appoint_Data> readAppoints(int id) async {
+    final db = await DbHelper.instance.getDatabase;
+    //final db = await instance.database;
+    final maps = await db.query(
+      appointTable,
+      columns: AppointFields.values,
+      where: '${AppointFields.appointid} = ?',
+      whereArgs: [id],
+    );
+
+    if (maps.isNotEmpty) {
+      return Appoint_Data.fromJson(maps.first);
+    } else {
+      throw Exception('ID $id not found');
+    }
+  }
+
+  Future<Meeting> readMeeting(int id) async {
+    final db = await DbHelper.instance.getDatabase;
+    //final db = await instance.database;
+    final maps = await db.query(
+      meetingTable,
+      columns: MeetingFields.values,
+      where: '${MeetingFields.meetId} = ?',
+      whereArgs: [id],
+    );
+
+    if (maps.isNotEmpty) {
+      return Meeting.fromJson(maps.first);
     } else {
       throw Exception('ID $id not found');
     }
